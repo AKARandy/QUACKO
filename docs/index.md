@@ -25,7 +25,7 @@
       <div class="text-slate-400 text-xs mt-1">Blur CER mean</div>
     </div>
     <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
-      <div class="text-xl font-bold whitespace-nowrap" id="m-reg">--</div>
+      <div class="text-lg font-bold whitespace-nowrap" id="m-reg">--</div>
       <div class="text-slate-400 text-xs mt-1">Regression status</div>
     </div>
   </div>
@@ -38,37 +38,37 @@
   </div>
 
   <h2 class="text-xl font-bold mt-10 mb-4">Screenshot proof (real runs)</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden md:col-span-2">
-      <img src="screenshots/02-result-valid.png" alt="real receipt read by the engine" loading="lazy" class="w-full">
-      <figcaption class="p-4 text-sm text-slate-400">Hero: a real receipt through the real engine (text, confidence, word boxes).</figcaption>
+  <div class="grid grid-cols-1 gap-6">
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <a href="screenshots/02-result-valid.png" target="_blank" rel="noopener"><img src="screenshots/02-result-valid.png" alt="real receipt read by the engine" loading="lazy" class="w-full"></a>
+      <figcaption class="p-4 text-sm text-slate-400">Hero: a real receipt through the real engine (text, confidence, word boxes). Click any shot for full size.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/01-upload-empty.png" alt="empty dashboard" loading="lazy" class="w-full">
+      <a href="screenshots/01-upload-empty.png" target="_blank" rel="noopener"><img src="screenshots/01-upload-empty.png" alt="empty dashboard" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">Empty dashboard before upload.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/03-error-invalid.png" alt="invalid upload error" loading="lazy" class="w-full">
+      <a href="screenshots/03-error-invalid.png" target="_blank" rel="noopener"><img src="screenshots/03-error-invalid.png" alt="invalid upload error" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">Invalid upload shows the real API error.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/04-clear-reset.png" alt="cleared dashboard" loading="lazy" class="w-full">
+      <a href="screenshots/04-clear-reset.png" target="_blank" rel="noopener"><img src="screenshots/04-clear-reset.png" alt="cleared dashboard" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">Clear resets to the empty state.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/06-pytest-report.png" alt="CI pytest report" loading="lazy" class="w-full">
+      <a href="screenshots/06-pytest-report.png" target="_blank" rel="noopener"><img src="screenshots/06-pytest-report.png" alt="CI pytest report" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">CI pytest report: 16/16 green.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/07-playwright-report.png" alt="CI Playwright report" loading="lazy" class="w-full">
+      <a href="screenshots/07-playwright-report.png" target="_blank" rel="noopener"><img src="screenshots/07-playwright-report.png" alt="CI Playwright report" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">CI Playwright report: 3/3 green.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/10-ui-match.png" alt="dashboard next to reference design" loading="lazy" class="w-full">
+      <a href="screenshots/10-ui-match.png" target="_blank" rel="noopener"><img src="screenshots/10-ui-match.png" alt="dashboard next to reference design" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">Dashboard next to the reference design it matches.</figcaption>
     </figure>
     <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-      <img src="screenshots/11-gallery-proof.png" alt="gallery self-test capture" loading="lazy" class="w-full">
+      <a href="screenshots/11-gallery-proof.png" target="_blank" rel="noopener"><img src="screenshots/11-gallery-proof.png" alt="gallery self-test capture" loading="lazy" class="w-full"></a>
       <figcaption class="p-4 text-sm text-slate-400">Gallery self-test: a forced miss, captured and rendered, then restored to green.</figcaption>
     </figure>
   </div>

@@ -35,7 +35,7 @@ def main():
         "# Failure Gallery",
         "",
         f"Generated {datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')} "
-        "by `scripts/gen_gallery.py` from **real test failures only** — click any "
+        "by `scripts/gen_gallery.py` from **real test failures only**: click any "
         "card to inspect input vs degraded variant vs ground truth.",
         "",
     ]
