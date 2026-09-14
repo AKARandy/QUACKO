@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-14T08:31:03Z",
+  "runs_s": [
+    0.476,
+    0.463,
+    0.423,
+    0.458,
+    0.511
+  ],
+  "mean_s": 0.466,
+  "gate_s": 1.5,
+  "basis": "5 real POSTs on img_0000.jpg via local Flask subprocess"
+}

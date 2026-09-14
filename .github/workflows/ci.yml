@@ -1,0 +1,32 @@
+name: ci
+on:
+  pull_request:
+jobs:
+  api-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install Tesseract 5
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+      - name: Install deps
+        run: python -m venv .venv && .venv/bin/pip install -r requirements.txt
+      - name: Start SUT
+        run: |
+          nohup .venv/bin/python app/main.py > sut.log 2>&1 &
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:5000/health && break || sleep 2; done
+      - name: API + Model tests
+        run: .venv/bin/python -m pytest tests/api tests/model -v --html=report/api-model.html --self-contained-html --junitxml=report/junit-api-model.xml
+      - name: Log pass rates (real junit only)
+        if: always()
+        run: .venv/bin/python scripts/log_run.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-model-report
+          path: |
+            report/
+            data/baselines/

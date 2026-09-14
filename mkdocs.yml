@@ -1,0 +1,35 @@
+site_name: QUACKO
+site_description: Multi-layer QA suite for a real Tesseract OCR SUT — real data, real engine, real evidence.
+site_url: https://AKARandy.github.io/QUACKO/
+repo_url: https://github.com/AKARandy/QUACKO
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+nav:
+  - Home: index.md
+  - Test Strategy: test-strategy.md
+  - Defect Taxonomy: defect-taxonomy.md
+  - Quality Gates: quality-gates.md
+  - Failure Gallery: failure-gallery.md
+markdown_extensions:
+  - tables
+  - toc
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences

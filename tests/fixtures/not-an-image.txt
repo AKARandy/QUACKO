@@ -1,0 +1,1 @@
+not an image — tiny non-OCR fixture for negative upload tests (allowed, PLAN-V2 §3.3 API-2)

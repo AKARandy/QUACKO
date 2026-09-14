@@ -1,0 +1,19 @@
+ID,Layer,Oracle,Gate,Severity,Status,Description,Expected
+API-1,API,Contract,strict,Blocker,PASS-LOCAL,POST /api/ocr valid image returns exact schema,{text:str; confidence:float 0..1; boxes:[[x,y,w,h]]}; HTTP 200
+API-2,API,Contract,strict,Blocker,PASS-LOCAL,Upload .txt fixture,HTTP 400
+API-3,API,Contract,strict,Blocker,PASS-LOCAL,POST /api/ocr with missing file part,HTTP 400
+API-4,API,Contract,strict,Blocker,PASS-LOCAL,Upload real JPEG > 8 MiB,HTTP 413
+API-5,API,Invariant,strict,Blocker,PASS-LOCAL,GET /health,HTTP 200 + {"status":"ok","engine":"tesseract"}; < 1 s
+API-6,API,Threshold,1.5 s,Major,PASS-LOCAL,Mean OCR latency over 5 real POSTs,< 1.5 s (logged to data/baselines/api-latency.json)
+API-7,API,Invariant,strict,Blocker,PASS-LOCAL,OCR boxes within original image bounds (5 receipts),All boxes satisfy 0<=x,y and x+w<=W, y+h<=H
+MQ-T1,Model,Threshold,0.05,Blocker,CALIBRATING,Clean field-CER under gate per receipt,All 20 < 0.05 (measured mean 0.0860; 12/20 over)
+MQ-T2,Model,Threshold,0.25,Blocker,CALIBRATING,Heavy-blur field-CER under gate per receipt,All 20 < 0.25 (measured mean 0.1140; 1/20 over)
+MQ-M1,Model,Metamorphic,0.05,Blocker,CALIBRATING,3-deg rotation invariance (field-CER fallback),Rotated text ~= original (18/20 over fallback)
+MQ-M2,Model,Metamorphic,strict,Blocker,CALIBRATING,Noise monotonicity (CER non-decreasing under more noise),CER(15% sp) >= CER(2% sp) (1/20 violated)
+MQ-M3,Model,Metamorphic,0.01,Blocker,CALIBRATING,2x scale invariance (CER non-increasing + 0.01),CER(2x) <= CER(orig) + 0.01 (7/20 over)
+MQ-I1,Model,Invariant,strict,Blocker,PASS-LOCAL,Confidence bounds,0.0 <= confidence <= 1.0 on all 20
+MQ-I2,Model,Invariant,strict,Blocker,PASS-LOCAL,Boxes within image bounds,All boxes inside W x H on all 20
+MQ-I3,Model,Invariant,strict,Blocker,PASS-LOCAL,Non-empty text on text-bearing receipts,OCR text non-empty on all 20
+UI-1,UI,Invariant,strict,Blocker,PASS-LOCAL,Upload valid receipt,Extracted text in DOM + preview canvas visible
+UI-2,UI,Invariant,strict,Blocker,PASS-LOCAL,Upload invalid .txt,Visible error message
+UI-3,UI,Invariant,strict,Blocker,PASS-LOCAL,Clear resets form,Result text emptied; dropzone re-shown; input cleared

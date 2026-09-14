@@ -1,0 +1,29 @@
+# Provenance — Committed 20
+
+- date: 2026-09-14
+- source: podbilabs/sroie-donut@main (HF dataset commit 2bf705b1affdaea2066336ff7f46334f70b2f5dc)
+- selection: PLAN-V2 §2 deterministic rule — one image per merchant store,
+  evenly spaced k*(n-1)//19 over 317 distinct stores sorted by first appearance
+- total size: 9532899 bytes (gate: <= 10485760)
+- every SHA256 verified against the V1 manifest at fetch time; tests re-verify on load
+
+- img_0000.jpg  f9c8699bb1adcfa3a49cd8425057c1818b5b4ec62d003a6f8bd5b0af8d7ccd53
+- img_0022.jpg  04d2d455b33fff097d2ea4ec595616ad622ebaab414a9a7b18a4c244cffb8616
+- img_0052.jpg  e6349887bb90548cbb91656230944b061e0d7435cce037de1826fbff09aa09d3
+- img_0089.jpg  525300601035f1ee41eccaa67a5d641e3a9491b3d37539242ce1834938326504
+- img_0115.jpg  c69bd2e6fa291bc6d44ce48bdcbfc57dd9b70445360b4cfeb0c6924c57140e34
+- img_0150.jpg  6b10944345842f5acb281edee83424468647d30bb468275b991384ace9e09070
+- img_0182.jpg  01da0b4340014f54aac08322e2bcfb41f69ec4c6a9e12ee2979157b8baf2fe51
+- img_0250.jpg  64726e032c51813415c510c9368a571dd3e12685d2acfd1f043c08f8096c0b1b
+- img_0302.jpg  284a9a4e21fbd389a7a4acfd09cc28178fdec06bacb33a2c2084f8a6e80c7d18
+- img_0345.jpg  472f3f2e8be49ce33edee8a09d44932426fc2cfcd2fa4b50d2dd078b40a0454f
+- img_0381.jpg  39edcda02069bde170f8b72072a91accc41749e5793b10ef422ffa64d49981f4
+- img_0435.jpg  62266d43a3b537e3c914b0190a33b5103ee573435fe5b18f0ec4808783213049
+- img_0489.jpg  3b8ae36fe4cd0be8689de1798128be2bd0bcff1f716435e514e4f02fd0b4e93b
+- img_0542.jpg  584a39304a80bb07563a3430078367b24a872a0ece95eed48015b38080e7d904
+- img_0589.jpg  bee3f83eafce17942239b0221f65ac8cdab3e4e3e72fe6090044ee362c3694c0
+- img_0667.jpg  e978332d016259b6ee88cda163e81dd3f89edeede30a0f3a1fc75e3f66eaade5
+- img_0721.jpg  cfe2e3fb11d9fb2091a4ed644c1d3e169d1ddaa105c7bfe55b25a339c8e8c4e8
+- img_0818.jpg  0996e7fbc5e074210149f23bbefbcae402a52bf3572194c90bc1394aedd638d1
+- img_0883.jpg  bf7381430aa36bde6fae21fa8b22b2185667b5ca5358f7368ad1b90a686b3eca
+- img_0963.jpg  a018b9efeb0a5d8c1f44d474bc77572d569c171a2ca13b19bfd44965574ffcf3
