@@ -221,6 +221,227 @@
         }
       ],
       "id": 1
+    },
+    {
+      "id": 2,
+      "provenance": {
+        "os": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "os_family": "linux",
+        "tesseract_version": "5.3.4",
+        "python": "3.12.14",
+        "pipeline": "gray+normalize(1600-2400)+gated-deskew+psm6"
+      },
+      "generated": "2026-09-14T11:51:53+00:00",
+      "receipts": 20,
+      "clean_cer_mean": 0.08,
+      "blur_cer_mean": 0.0919,
+      "m2_sums": {
+        "noise_l": 5.3041,
+        "noise_h": 9.4154
+      },
+      "avg_ocr_s": 1.515,
+      "by_receipt": [
+        {
+          "file": "img_0000.jpg",
+          "conf": 0.7871,
+          "cer_clean": 0.011,
+          "cer_blur": 0.044,
+          "cer_rot": 0.011,
+          "cer_noise_l": 0.3187,
+          "cer_noise_h": 0.5275,
+          "cer_up2": 0.011
+        },
+        {
+          "file": "img_0022.jpg",
+          "conf": 0.6512,
+          "cer_clean": 0.0808,
+          "cer_blur": 0.303,
+          "cer_rot": 0.0505,
+          "cer_noise_l": 0.4747,
+          "cer_noise_h": 0.6364,
+          "cer_up2": 0.0404
+        },
+        {
+          "file": "img_0052.jpg",
+          "conf": 0.7783,
+          "cer_clean": 0.0187,
+          "cer_blur": 0.0187,
+          "cer_rot": 0.0374,
+          "cer_noise_l": 0.4579,
+          "cer_noise_h": 0.9065,
+          "cer_up2": 0.0093
+        },
+        {
+          "file": "img_0089.jpg",
+          "conf": 0.8167,
+          "cer_clean": 0.146,
+          "cer_blur": 0.1533,
+          "cer_rot": 0.146,
+          "cer_noise_l": 0.2044,
+          "cer_noise_h": 0.4599,
+          "cer_up2": 0.1606
+        },
+        {
+          "file": "img_0115.jpg",
+          "conf": 0.7808,
+          "cer_clean": 0.0303,
+          "cer_blur": 0.0303,
+          "cer_rot": 0.0606,
+          "cer_noise_l": 0.0455,
+          "cer_noise_h": 0.0606,
+          "cer_up2": 0.0152
+        },
+        {
+          "file": "img_0150.jpg",
+          "conf": 0.7066,
+          "cer_clean": 0.2109,
+          "cer_blur": 0.2422,
+          "cer_rot": 0.1875,
+          "cer_noise_l": 0.2422,
+          "cer_noise_h": 0.6406,
+          "cer_up2": 0.2109
+        },
+        {
+          "file": "img_0182.jpg",
+          "conf": 0.7822,
+          "cer_clean": 0.1606,
+          "cer_blur": 0.1606,
+          "cer_rot": 0.1533,
+          "cer_noise_l": 0.1752,
+          "cer_noise_h": 0.1606,
+          "cer_up2": 0.146
+        },
+        {
+          "file": "img_0250.jpg",
+          "conf": 0.7427,
+          "cer_clean": 0.1727,
+          "cer_blur": 0.1655,
+          "cer_rot": 0.1871,
+          "cer_noise_l": 0.9496,
+          "cer_noise_h": 0.6835,
+          "cer_up2": 0.1727
+        },
+        {
+          "file": "img_0302.jpg",
+          "conf": 0.7267,
+          "cer_clean": 0.045,
+          "cer_blur": 0.018,
+          "cer_rot": 0.0541,
+          "cer_noise_l": 0.2883,
+          "cer_noise_h": 0.4505,
+          "cer_up2": 0.045
+        },
+        {
+          "file": "img_0345.jpg",
+          "conf": 0.6724,
+          "cer_clean": 0.1778,
+          "cer_blur": 0.2074,
+          "cer_rot": 0.1704,
+          "cer_noise_l": 0.437,
+          "cer_noise_h": 0.6815,
+          "cer_up2": 0.2
+        },
+        {
+          "file": "img_0381.jpg",
+          "conf": 0.7716,
+          "cer_clean": 0.025,
+          "cer_blur": 0.0583,
+          "cer_rot": 0.0667,
+          "cer_noise_l": 0.3167,
+          "cer_noise_h": 0.675,
+          "cer_up2": 0.0667
+        },
+        {
+          "file": "img_0435.jpg",
+          "conf": 0.7016,
+          "cer_clean": 0.0833,
+          "cer_blur": 0.0,
+          "cer_rot": 0.0833,
+          "cer_noise_l": 0.0556,
+          "cer_noise_h": 0.2222,
+          "cer_up2": 0.0556
+        },
+        {
+          "file": "img_0489.jpg",
+          "conf": 0.7415,
+          "cer_clean": 0.0732,
+          "cer_blur": 0.0854,
+          "cer_rot": 0.0732,
+          "cer_noise_l": 0.1098,
+          "cer_noise_h": 0.2561,
+          "cer_up2": 0.0732
+        },
+        {
+          "file": "img_0542.jpg",
+          "conf": 0.7529,
+          "cer_clean": 0.0526,
+          "cer_blur": 0.0737,
+          "cer_rot": 0.0421,
+          "cer_noise_l": 0.0947,
+          "cer_noise_h": 0.2737,
+          "cer_up2": 0.0421
+        },
+        {
+          "file": "img_0589.jpg",
+          "conf": 0.6972,
+          "cer_clean": 0.0658,
+          "cer_blur": 0.0526,
+          "cer_rot": 0.1316,
+          "cer_noise_l": 0.0789,
+          "cer_noise_h": 0.5789,
+          "cer_up2": 0.0658
+        },
+        {
+          "file": "img_0667.jpg",
+          "conf": 0.7643,
+          "cer_clean": 0.1132,
+          "cer_blur": 0.1226,
+          "cer_rot": 0.0755,
+          "cer_noise_l": 0.434,
+          "cer_noise_h": 0.6792,
+          "cer_up2": 0.0943
+        },
+        {
+          "file": "img_0721.jpg",
+          "conf": 0.7302,
+          "cer_clean": 0.0761,
+          "cer_blur": 0.0543,
+          "cer_rot": 0.087,
+          "cer_noise_l": 0.0761,
+          "cer_noise_h": 0.0435,
+          "cer_up2": 0.0761
+        },
+        {
+          "file": "img_0818.jpg",
+          "conf": 0.8579,
+          "cer_clean": 0.0,
+          "cer_blur": 0.0,
+          "cer_rot": 0.0,
+          "cer_noise_l": 0.1313,
+          "cer_noise_h": 0.3131,
+          "cer_up2": 0.0
+        },
+        {
+          "file": "img_0883.jpg",
+          "conf": 0.7745,
+          "cer_clean": 0.0139,
+          "cer_blur": 0.0139,
+          "cer_rot": 0.0139,
+          "cer_noise_l": 0.2222,
+          "cer_noise_h": 0.5139,
+          "cer_up2": 0.0139
+        },
+        {
+          "file": "img_0963.jpg",
+          "conf": 0.7701,
+          "cer_clean": 0.0435,
+          "cer_blur": 0.0348,
+          "cer_rot": 0.0435,
+          "cer_noise_l": 0.1913,
+          "cer_noise_h": 0.6522,
+          "cer_up2": 0.0174
+        }
+      ]
     }
   ],
   "last_run": {

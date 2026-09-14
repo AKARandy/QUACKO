@@ -92,6 +92,7 @@ order in the change log below:
 | # | Date | Provenance | clean mean | blur mean | Order |
 |---|---|---|---|---|---|
 | 1 | 2026-09-14 | windows / Tesseract 5.5.0.20241111 / python 3.12.6 / `gray+normalize(1600-2400)+gated-deskew+psm6` | 0.0780 | 0.0977 | initial baseline — Option C order (measured run `2026-09-14T10:53:38Z`, 120 real OCR calls, avg 1.136 s) |
+| 2 | 2026-09-14 | linux / Tesseract 5.3.4 / python 3.12.14 / `gray+normalize(1600-2400)+gated-deskew+psm6` | 0.0800 | 0.0919 | env correction — multi-baseline order (CI run 34840020518 `cer-run.json` via `add_baseline.py`, generated `2026-09-14T11:51:53Z`, avg 1.515 s; cross-run determinism: identical CERs in runs 34838251428/34840020518) |
 
 ## Change log
 
@@ -113,5 +114,8 @@ order in the change log below:
   match → REG fails closed with an explicit ENV-DELTA error, never a silent
   cross-environment comparison. Writers: `calibrate.py` + new
   `add_baseline.py`; metrics schema 2 → 3 (`baselines` list).
-- _pending — baseline register entry #2 (linux / Tesseract 5.3.4) from CI run
-  34838251428's `cer-run.json` via `add_baseline.py`, then CI re-run to green._
+- **2026-09-14 (user order, multi-baseline)** — env-delta path executed as documented:
+  CI run 34838251428 red ONLY on REG-CLEAN (4 receipts, provenance linux/5.3.4
+  vs #1 windows/5.5.0, no code change) → order to keep #1 + select by provenance
+  + fail closed → code change (schema 3, `add_baseline.py`) → CI run 34840020518
+  failed closed exactly as designed → baseline #2 from its `cer-run.json`.
