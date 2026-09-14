@@ -21,7 +21,7 @@ real images, never synthetic generation. Missing file or hash mismatch = hard
 
 | Layer | Tool | What it proves | Blocking? |
 |---|---|---|---|
-| Model quality | pytest + real Tesseract | threshold / metamorphic / invariant oracles on field-CER | yes (PR) |
+| Model quality | pytest + real Tesseract | invariants + metamorphic relations (hard), CER telemetry (reported), 10% regression (hard) | yes (PR) |
 | API contract | pytest + requests | schema, 400/413 paths, latency < 1.5 s, box bounds | yes (PR) |
 | UI smoke | Playwright (chromium headless) | upload → text in DOM; invalid → error; Clear resets | yes (main deploy) |
 | Evidence | pytest-html + Playwright HTML + failure gallery | a human can see every result and every real miss | published on Pages |
@@ -32,8 +32,11 @@ real images, never synthetic generation. Missing file or hash mismatch = hard
    low contrast, dense small print, and date/total digit errors are the expected
    failure modes. Mitigation: field-anchored CER measures what matters (the 4 fields),
    and the failure gallery keeps every miss visible instead of averaging it away.
-2. **Gates are provisional** until the Phase-2 calibration run logs measured values.
-   A gate change is an explicit, logged decision (Quality Gates §recalibration log).
+2. **Accuracy is telemetry, stability is gated** (Option C, user order 2026-09-14):
+   CER is measured and displayed every run; hard gates cover contract / invariants /
+   metamorphic / regression. Locked tolerances (M1 0.20, M3 +0.10, M2 aggregate
+   strict, REG 10% + 0.01 floor) change only via an explicit logged user order
+   (Quality Gates §change log; re-baseline procedure for environment deltas).
 3. **Single-CPU timing** (API-6 latency): CI runners differ from local hardware; the
    gate is measured per environment and logged, not assumed.
 4. **Metamorphic strictness** (MQ-M1 rotation): 3° tilt can change word segmentation;

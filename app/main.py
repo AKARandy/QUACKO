@@ -34,12 +34,25 @@ def health():
 
 @app.get("/api/stats")
 def stats():
-    """Dashboard data. Real run data only — explicit no-run state, never
-    placeholder numbers (NO-LARP)."""
+    """Dashboard data (schema 2). Real run data only — explicit no-run state,
+    never placeholder numbers (NO-LARP). Serves the latest measured run
+    (`last_run`, else the `baseline` measurement) as a flat object, plus
+    provenance of both sections for the footer."""
     if not os.path.exists(METRICS):
         return jsonify({"status": "no-run"})
     with open(METRICS, encoding="utf-8") as fh:
-        return jsonify(json.load(fh))
+        m = json.load(fh)
+    run = m.get("last_run") or m.get("baseline")
+    if not run:
+        return jsonify({"status": "no-run"})
+    out = {"status": "ok", "source": "last_run" if m.get("last_run") else "baseline"}
+    for k in ("generated", "receipts", "clean_cer_mean", "blur_cer_mean", "avg_ocr_s",
+              "m2_sums", "by_receipt", "pass_rate", "provenance"):
+        if k in run:
+            out[k] = run[k]
+    if m.get("baseline") and m["baseline"].get("provenance"):
+        out["baseline_provenance"] = m["baseline"]["provenance"]
+    return jsonify(out)
 
 
 @app.post("/api/ocr")

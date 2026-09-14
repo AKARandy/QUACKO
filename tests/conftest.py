@@ -19,6 +19,13 @@ GOLDEN = os.path.join(ROOT, "data", "golden")
 PORT = 5000
 BASE = f"http://127.0.0.1:{PORT}"
 
+# The failure gallery must reflect the CURRENT run only: clear stale captures
+# from earlier runs at collection time (CI is a fresh checkout; local
+# accumulates). capture_failure() recreates the dir on demand.
+import shutil  # noqa: E402
+
+shutil.rmtree(os.path.join(ROOT, "report", "failures"), ignore_errors=True)
+
 from gallery import set_gallery_ctx  # noqa: E402,F401  (re-exported for tests)
 
 
@@ -99,6 +106,51 @@ def sut(golden):  # depends on golden: fail fast on data before starting the ser
         proc.wait(timeout=10)
     except subprocess.TimeoutExpired:
         proc.kill()
+
+
+@pytest.fixture(scope="session")
+def ocr_all(golden):
+    """Real engine OCR of all 20 receipts x 6 variants, once per session.
+    Shared by invariant / metamorphic / telemetry / regression tests so each
+    image is measured exactly once per run (deterministic engine)."""
+    from cer import field_cer
+    from degrade import to_array, from_array, blur_heavy, noise_sp, rotate3, upscale2
+    from ocr_engine import ocr_bytes
+
+    receipts = []
+    t_sum = 0.0
+    n = 0
+    for item in golden:
+        t0 = time.perf_counter()
+        r = ocr_bytes(item["bytes"])
+        t_sum += time.perf_counter() - t0
+        n += 1
+        rec = {
+            "file": item["file"],
+            "gt": item["gt"],
+            "bytes": item["bytes"],
+            "conf": r["confidence"],
+            "width": r["width"],
+            "height": r["height"],
+            "boxes": r["boxes"],
+            "clean": {"text": r["text"], "cer": field_cer(item["gt"], r["text"])[0]},
+        }
+        img = to_array(item["bytes"])
+        for name, variant in (
+            ("blur", blur_heavy(img)),
+            ("rot", rotate3(img)),
+            ("noise_l", noise_sp(img, 0.02)),
+            ("noise_h", noise_sp(img, 0.15)),
+            ("up2", upscale2(img)),
+        ):
+            t0 = time.perf_counter()
+            rv = ocr_bytes(from_array(variant))
+            t_sum += time.perf_counter() - t0
+            n += 1
+            rec[name] = {"text": rv["text"], "cer": field_cer(item["gt"], rv["text"])[0]}
+        rec["rot_vs_clean"] = field_cer(r["text"], rec["rot"]["text"])[0]
+        receipts.append(rec)
+    return {"receipts": receipts, "avg_ocr_s": round(t_sum / n, 3)}
 
 
 @pytest.hookimpl(hookwrapper=True)

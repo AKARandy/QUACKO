@@ -1,19 +1,32 @@
-"""Thin pytesseract wrapper over system Tesseract 5.
+﻿"""Thin pytesseract wrapper over system Tesseract 5.
 
-Real engine only — no stub / fake / mock fallback. Missing engine or
+Real engine only â€” no stub / fake / mock fallback. Missing engine or
 unidentified input raises; callers surface the error (fail fast, NO-LARP).
 
-Working size: grayscale; max side normalized into [1600, 2400] px (upscale
-small scans, downscale huge scans). Returned boxes are mapped back to the
-original image coordinates.
+Pipeline (calibrated 2026-09-14 on the Committed 20, see
+docs/quality-gates.md): grayscale -> max-side normalization into
+[1600, 2400] px -> gated deskew (median Hough line angle, applied only
+with >= 8 lines, |angle| >= 0.3 deg, angle IQR <= 5 deg) -> Tesseract
+PSM 6. Returned boxes are mapped back to original image coordinates.
 """
 import io
 
+import cv2
+import numpy as np
 from PIL import Image, UnidentifiedImageError
 import pytesseract
 
 MIN_SIDE = 1600
 MAX_SIDE = 2400
+PSM = 6
+DESKEW_MIN_ANGLE = 0.3
+DESKEW_MIN_LINES = 8
+DESKEW_MAX_IQR = 5.0
+
+# QA SUT: uploads are size-capped (8 MiB) and every image is normalized to
+# <= 2400 px max side; PIL's decompression-bomb limit would false-positive
+# on large legitimate scans (e.g. 5900 px receipts upsampled by test fixtures).
+Image.MAX_IMAGE_PIXELS = None
 
 
 def _working(img):
@@ -30,6 +43,35 @@ def _working(img):
     return gray, scale
 
 
+def _estimate_skew(arr):
+    edges = cv2.Canny(arr, 50, 150, apertureSize=3)
+    lines = cv2.HoughLinesP(
+        edges, 1, np.pi / 180, threshold=200, minLineLength=arr.shape[1] // 4, maxLineGap=20
+    )
+    if lines is None:
+        return 0.0, 0, 0.0
+    angles = []
+    for l in lines:
+        x1, y1, x2, y2 = np.asarray(l).ravel()[:4]
+        a = np.degrees(np.arctan2(y2 - y1, x2 - x1))
+        if abs(a) < 15:
+            angles.append(a)
+    if len(angles) < 2:
+        return 0.0, len(angles), 0.0
+    med = float(np.median(angles))
+    iqr = float(np.percentile(angles, 75) - np.percentile(angles, 25))
+    return med, len(angles), iqr
+
+
+def _deskew(arr):
+    med, n, iqr = _estimate_skew(arr)
+    if n < DESKEW_MIN_LINES or abs(med) < DESKEW_MIN_ANGLE or iqr > DESKEW_MAX_IQR:
+        return arr
+    h, w = arr.shape[:2]
+    m = cv2.getRotationMatrix2D((w / 2, h / 2), med, 1.0)
+    return cv2.warpAffine(arr, m, (w, h), borderValue=255, flags=cv2.INTER_LINEAR)
+
+
 def ocr_bytes(data: bytes) -> dict:
     """Run real Tesseract OCR on raw image bytes.
 
@@ -41,7 +83,10 @@ def ocr_bytes(data: bytes) -> dict:
     img.load()
     W, H = img.width, img.height
     big, scale = _working(img)
-    d = pytesseract.image_to_data(big, output_type=pytesseract.Output.DICT)
+    arr = _deskew(np.array(big))
+    d = pytesseract.image_to_data(
+        Image.fromarray(arr), config=f"--psm {PSM}", output_type=pytesseract.Output.DICT
+    )
     n = len(d["text"])
     line_map = {}
     boxes = []

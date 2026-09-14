@@ -12,20 +12,23 @@ comes from a logged real run.
 
 | Layer | Tool | What it proves |
 |---|---|---|
-| Model quality | pytest + real Tesseract | field-CER threshold, metamorphic (rotation/noise/scale), invariant oracles |
+| Model quality | pytest + real Tesseract | invariants + metamorphic (rotation/noise/scale) + 10% regression (hard gates); field-CER = telemetry |
 | API contract | pytest + requests | exact response schema, 400/413 paths, latency < 1.5 s, box bounds |
 | UI smoke | Playwright (chromium headless) | upload → text in DOM; invalid → error; Clear resets |
 | Evidence | pytest-html + Playwright HTML + failure gallery | every result and every real miss, visible |
 
 ## Status (honest, per NO-LARP)
 
-- **VERIFIED 2026-09-14 (local, Windows, Tesseract 5.5.0):** API 7/7 pass,
-  UI 3/3 pass, invariants 3/3 pass; threshold + metamorphic gates measured on
-  all 20 receipts — see `docs/quality-gates.md` (recalibration log) and
-  `data/baselines/metrics.json` for the real per-receipt table.
+- **VERIFIED 2026-09-14 (local, Windows-11, Tesseract 5.5.0.20241111):** all hard
+  gates green — API 7/7, invariants 3/3, metamorphic 3/3 (M1 ≤ 0.20, M2 aggregate
+  strict, M3 +0.10), regression 2/2 vs committed baseline, UI 3/3.
+  **Accuracy = telemetry** (Option C spec, user order 2026-09-14): clean CER mean
+  0.078, blur mean 0.098 — measured + displayed, never gated.
 - **PLANNED:** GitHub repo `AKARandy/QUACKO`, CI (`ci.yml` PR-blocking,
   `deploy.yml` main + GitHub Pages at `AKARandy.github.io/QUACKO/`).
   Badges below go live once the repo exists — they are not evidence yet.
+- Gate spec + change log + re-baseline procedure: `docs/quality-gates.md`;
+  real per-receipt table + provenance: `data/baselines/metrics.json`.
 
 | Workflow | Badge |
 |---|---|

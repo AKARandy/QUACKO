@@ -67,13 +67,17 @@ def test_api_5_health(sut):
 
 
 def test_api_6_latency(sut, golden):
+    """API-6: latency is TELEMETRY (Option C order 2026-09-14 — reported, not
+    gated). The gate is the API contract itself: all 5 real POSTs must return
+    200. Measured values are logged to data/baselines/api-latency.json."""
     item = golden[0]
     runs = []
+    statuses = []
     for _ in range(5):
         t0 = time.perf_counter()
         r = requests.post(f"{sut}/api/ocr", files={"image": (item["file"], item["bytes"])}, timeout=120)
         runs.append(time.perf_counter() - t0)
-        assert r.status_code == 200
+        statuses.append(r.status_code)
     mean = sum(runs) / len(runs)
     out = os.path.join(ROOT, "data", "baselines", "api-latency.json")
     os.makedirs(os.path.dirname(out), exist_ok=True)
@@ -83,13 +87,14 @@ def test_api_6_latency(sut, golden):
                 "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "runs_s": [round(t, 3) for t in runs],
                 "mean_s": round(mean, 3),
-                "gate_s": 1.5,
+                "telemetry": True,
+                "note": "reported metric, not a gate (Option C order 2026-09-14)",
                 "basis": f"5 real POSTs on {item['file']} via local Flask subprocess",
             },
             fh,
             indent=2,
         )
-    assert mean < 1.5, f"mean latency {mean:.3f}s exceeds 1.5s gate (runs={runs})"
+    assert all(s == 200 for s in statuses), f"API contract violated: statuses {statuses}"
 
 
 def test_api_7_boxes_in_bounds(sut, golden):

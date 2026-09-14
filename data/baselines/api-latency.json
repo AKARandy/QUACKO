@@ -1,13 +1,14 @@
 {
-  "date": "2026-09-14T08:31:03Z",
+  "date": "2026-09-14T10:57:19Z",
   "runs_s": [
-    0.476,
-    0.463,
-    0.423,
-    0.458,
-    0.511
+    0.803,
+    0.688,
+    0.671,
+    0.667,
+    0.695
   ],
-  "mean_s": 0.466,
-  "gate_s": 1.5,
+  "mean_s": 0.705,
+  "telemetry": true,
+  "note": "reported metric, not a gate (Option C order 2026-09-14)",
   "basis": "5 real POSTs on img_0000.jpg via local Flask subprocess"
 }

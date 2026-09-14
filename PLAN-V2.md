@@ -1,6 +1,6 @@
 # QUACKO PLAN V2 — Tesseract Edition (Committed-20, 3 Layers, 2 Workflows)
 
-**Status: PLANNED — nothing in this file is built, run, or green yet.**
+**Status: IMPLEMENTED locally 2026-09-14 (all hard gates green — see ADDENDUM + `docs/quality-gates.md`); GitHub repo/CI/Pages = PLANNED (Phase 4).**
 **Supersedes:** `PLAN.md` (RapidOCR/full-973/7-workflow plan) where they conflict, per user order 2026-09-14 ("definitive blueprint").
 **Survives:** the NO-LARP honesty layer (`PLAN.md` §8 / `AGENTS.md`) — it binds this plan unchanged.
 
@@ -30,6 +30,37 @@ layout of §6. Historical records (`PLAN.md`, `AGENTS.md`, `NUKE.md`,
 DECIDED 2026-09-14 (user): they live in `docs/history/`, **gitignored** (kept on disk,
 never in the repo); `AGENTS.md` is synced in place to V2 rules (old copy kept as
 `docs/history/AGENTS-V1.md`).
+
+## ADDENDUM 2026-09-14 — Spec re-derivation (Option C), user order
+
+Supersedes the §3.2/§3.3 acceptance-CER gate text: the 0.05 / 0.25 / ≤0.05 / strict /
++0.01 assertions were **blueprint placeholders, not product requirements** — Tesseract 5
+is a general-purpose engine, and 95% field accuracy on photo receipts was never a
+credible promise (first full measurement: clean mean 0.086, worst 0.222). The live spec
+is now `docs/quality-gates.md` (standard ML-QA split: **accuracy = telemetry, stability
+= gates**):
+
+1. **Hard gates (pass/fail, block CI):** API contract (API-1..5,7; API-6 latency
+   demoted to telemetry), invariants I1–I3, metamorphic relations — M1 rotation
+   stability ≤ 0.20 (measured worst 0.1454), M2 **strict aggregate** noise
+   monotonicity Σheavy ≥ Σlight (measured 11.2355 ≥ 6.389), M3 scale stability
+   ≤ +0.10 (measured worst +0.0583) — UI-1..3 (deploy tier).
+2. **Accuracy telemetry (no pass/fail):** absolute field-CER (clean, blur, all
+   variants) measured every run → `data/baselines/metrics.json` (`last_run`) →
+   dashboard. A telemetry test failing = broken measurement pipeline, not an
+   accuracy statement.
+3. **Regression gate (pass/fail):** per-receipt clean & blur CER ≤
+   max(0.01, 1.10 × committed baseline). Baseline provenance (OS + Tesseract
+   version + pipeline) is recorded in `metrics.json`; a red with provenance
+   mismatch and no code change = environment delta → re-baseline from CI
+   artifacts under a logged order (environment correction, procedure in
+   `docs/quality-gates.md`).
+
+Measured 2026-09-14, local Windows-11 / Tesseract 5.5.0.20241111 / Python 3.12.6,
+pipeline `gray+normalize(1600-2400)+gated-deskew+psm6`: API 7/7, invariants 3/3,
+metamorphic 3/3, regression 2/2, UI 3/3 — **all hard gates green (VERIFIED, this
+session)**. CI (ubuntu + apt Tesseract) is a different provenance; first CI run may
+trigger the documented re-baseline procedure.
 
 ## 1. Facts verified on this machine (2026-09-14, this session)
 
@@ -111,9 +142,10 @@ normalize (NFKC, lowercase, collapse whitespace, strip non-alphanumerics except 
 for each GT field find the best-matching OCR line by edit distance (pure-Python Levenshtein,
 no extra dep); `CER = Σ edit_dist / Σ len(gt_field)` over the fields.
 This is the same trap the old plan hit (`quality-gates.md:7-16`): CER against a 4-field GT
-measures field fidelity, and the gates below are **provisional initial values from the
-blueprint, to be recalibrated after the first full run** and logged in `docs/quality-gates.md`
-(gates change only via recorded order — tighten, never silently loosen).
+measures field fidelity. **Addendum 2026-09-14 (user order, Option C): the acceptance-CER
+gates in the table below were placeholders and are superseded** — accuracy is telemetry,
+stability is gated. The live gate spec = `docs/quality-gates.md`; its locked tolerances
+change only via a new logged user order.
 
 **Threshold oracles** (`tests/model/test_threshold.py`):
 

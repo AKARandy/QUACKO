@@ -21,6 +21,8 @@ theme:
     - navigation.sections
     - navigation.top
     - content.code.copy
+exclude_docs: |
+  history/**
 nav:
   - Home: index.md
   - Test Strategy: test-strategy.md
