@@ -55,36 +55,44 @@ order in the change log below:
   (20/20 measured, every CER ∈ [0,1]). A failure there = broken pipeline or data
   (DATA-ERR class) — never a statement about engine accuracy.
 
-## Tier 3 — Regression baseline
+## Tier 3 — Regression baselines (provenance-matched; fail closed)
 
-- File: `data/baselines/metrics.json`, `baseline` section (schema 2), committed.
-- Rule: `run_cer ≤ max(0.01, 1.10 × baseline_cer)`, per receipt, clean + blur
-  (`tests/model/test_regression.py`).
-- Provenance is recorded in both sections, so an environment delta is diagnosable.
-- The `baseline` section is written **only** by `scripts/calibrate.py` + commit
-  under a logged order. A run never touches it (`scripts/log_run.py` writes
-  `last_run` only).
+- File: `data/baselines/metrics.json`, `baselines` list (schema 3), committed.
+  Each entry carries `id` + `provenance` (os_family, tesseract_version, python,
+  pipeline) + means + per-receipt rows.
+- Selection rule (user order 2026-09-14): REG compares against the entry whose
+  `(os_family, tesseract_version)` matches the running environment — local
+  Windows runs compare against #1, CI against #2. **If no entry matches, REG
+  fails closed** with an explicit ENV-DELTA error naming the mismatch — never a
+  silent cross-environment comparison (`tests/model/test_regression.py`).
+- Rule: `run_cer ≤ max(0.01, 1.10 × baseline_cer)`, per receipt, clean + blur.
+- A `baselines` entry is written **only** by `scripts/calibrate.py` (fresh
+  measurement) or `scripts/add_baseline.py` (entry from a logged CI run record)
+  + commit under a logged order. A run never touches the list
+  (`scripts/log_run.py` writes `last_run` only).
 
 ### Re-baseline procedure (environment correction — user addendum 2026-09-14)
 
-1. **Trigger:** REG red + provenance mismatch (Tesseract version, OS family, or
-   pipeline) between current run and baseline + no code change since the baseline
-   commit.
-2. **Verify:** the failure message carries the ENVIRONMENT DELTA diagnostic;
-   `git log <baseline-commit>..HEAD` is empty or contains no SUT/data changes.
-3. **Fix:** pull `data/baselines/metrics.json` + `report/cer-run.json` from the CI
-   artifact (`test-reports`), record the order in the change log, commit the new
-   `baseline` section with its provenance. This is an **environment correction,
-   not a burying event** — the old baseline and its numbers remain in this log.
-4. **Expectation:** the first CI run (ubuntu apt Tesseract vs the local 5.5.0
-   baseline) is a different provenance; an environment-delta REG red there is
-   anticipated and pre-authorized by this procedure.
+1. **Trigger:** REG red naming an environment delta (fail-closed: no matching
+   baseline entry) + no code change since the last baseline commit.
+2. **Verify:** the failure message names the current provenance and the known
+   entries; `git log` shows no SUT/data changes since.
+3. **Fix:** download `report/cer-run.json` from the CI artifact
+   (`api-model-report`), validate + append it with
+   `python scripts/add_baseline.py <record>` (checks 20/20 rows, file set =
+   `labels.json` keys, means recompute), record the order in the change log,
+   commit. This is an **environment correction, not a burying event** — every
+   baseline and its numbers remain in the register below.
+4. **History:** the first CI run (ubuntu apt Tesseract 5.3.4 vs the local 5.5.0
+   baseline #1) went REG-red exactly this way (run 34838251428, 4 clean-CER
+   receipts over the 10% line, everything else green) → baseline #2.
 
 ## Baseline register
 
 | # | Date | Provenance | clean mean | blur mean | Order |
 |---|---|---|---|---|---|
 | 1 | 2026-09-14 | windows / Tesseract 5.5.0.20241111 / python 3.12.6 / `gray+normalize(1600-2400)+gated-deskew+psm6` | 0.0780 | 0.0977 | initial baseline — Option C order (measured run `2026-09-14T10:53:38Z`, 120 real OCR calls, avg 1.136 s) |
+| 2 | 2026-09-14 | linux / Tesseract 5.3.4 / python 3.12.14 / `gray+normalize(1600-2400)+gated-deskew+psm6` | 0.0800 | 0.0919 | env correction — multi-baseline order (CI run 34840020518 `cer-run.json` via `add_baseline.py`, generated `2026-09-14T11:51:53Z`, avg 1.515 s; cross-run determinism: identical CERs in runs 34838251428/34840020518) |
 
 ## Change log
 
@@ -100,5 +108,14 @@ order in the change log below:
   schema 2 with provenance (addendum). Before → after:
   `0.05 / 0.25 / ≤0.05 / strict-per-receipt / +0.01 / 1.5s-hard`
   → `(no CER acceptance) / 0.20 / aggregate-strict / +0.10 / 10%-regression / latency-telemetry`.
-- _pending — first CI run: if REG reds with provenance mismatch, baseline register
-  entry #2 per the procedure above._
+- **2026-09-14 (user order, multi-baseline addendum)** — keep baseline #1 in the
+  register; REG selects the entry whose provenance (OS + Tesseract version)
+  matches the running environment — local Windows runs vs #1, CI vs #2; no
+  match → REG fails closed with an explicit ENV-DELTA error, never a silent
+  cross-environment comparison. Writers: `calibrate.py` + new
+  `add_baseline.py`; metrics schema 2 → 3 (`baselines` list).
+- **2026-09-14 (user order, multi-baseline)** — env-delta path executed as documented:
+  CI run 34838251428 red ONLY on REG-CLEAN (4 receipts, provenance linux/5.3.4
+  vs #1 windows/5.5.0, no code change) → order to keep #1 + select by provenance
+  + fail closed → code change (schema 3, `add_baseline.py`) → CI run 34840020518
+  failed closed exactly as designed → baseline #2 from its `cer-run.json`.

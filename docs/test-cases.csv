@@ -13,8 +13,8 @@ MQ-I3,Model,Invariant,strict,Blocker,PASS,Non-empty text on text-bearing receipt
 MQ-M1,Model,Metamorphic,<=0.20 (locked 2026-09-14),Blocker,PASS,3-deg rotation stability (field-CER clean vs rotated),worst 0.1454 (measured; basis in quality-gates.md)
 MQ-M2,Model,Metamorphic,aggregate strict,Blocker,PASS,Sum CER(noise 15%) >= Sum CER(noise 2%) over all 20,11.2355 >= 6.389 (measured; per-receipt table = telemetry)
 MQ-M3,Model,Metamorphic,+0.10 (locked 2026-09-14),Blocker,PASS,2x scale stability,CER(2x) <= CER(orig) + 0.10 (measured worst +0.0583)
-REG-1,Model,Regression,max(0.01; 1.10 x baseline),Blocker,PASS,Per-receipt clean CER vs committed baseline (provenance-aware),0% delta (baseline = same-provenance run 2026-09-14)
-REG-2,Model,Regression,max(0.01; 1.10 x baseline),Blocker,PASS,Per-receipt blur CER vs committed baseline (provenance-aware),0% delta (baseline = same-provenance run 2026-09-14)
+REG-1,Model,Regression,max(0.01; 1.10 x baseline),Blocker,PASS,Per-receipt clean CER vs provenance-matched baseline entry (fail closed ENV-DELTA if none),0% delta (baseline #1 = same-provenance run 2026-09-14)
+REG-2,Model,Regression,max(0.01; 1.10 x baseline),Blocker,PASS,Per-receipt blur CER vs provenance-matched baseline entry (fail closed ENV-DELTA if none),0% delta (baseline #1 = same-provenance run 2026-09-14)
 UI-1,UI,Invariant,strict,Blocker,PASS,Upload valid receipt,Extracted text in DOM + preview canvas visible
 UI-2,UI,Invariant,strict,Blocker,PASS,Upload invalid .txt,Visible error message
 UI-3,UI,Invariant,strict,Blocker,PASS,Clear resets form,Result text emptied; dropzone re-shown; input cleared
