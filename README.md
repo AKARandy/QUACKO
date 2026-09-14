@@ -1,5 +1,8 @@
 # QUACKO — V2 (Tesseract edition)
 
+[![CI (PR)](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml)
+[![Deploy (main)](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml)
+
 Multi-layer QA suite for a **real** OCR SUT: Flask 3 + Tesseract 5 behind
 `POST /api/ocr`, tested against the **Committed 20** — 20 real SROIE Task-1
 receipts, SHA256-pinned and committed in-repo (`data/golden/`). No synthetic
