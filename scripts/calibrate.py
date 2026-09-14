@@ -1,14 +1,18 @@
-"""Re-baseline act (Option C architecture, user order 2026-09-14).
+"""Re-baseline act (Option C architecture, user order 2026-09-14;
+multi-baseline selection per user order 2026-09-14).
 
 Measures all six variants (clean, heavy blur, 3-deg rotation, 2% / 15% salt &
-pepper, 2x upscale) on the Committed 20 with the real engine and writes the
-`baseline` section of data/baselines/metrics.json (schema 2: baseline +
-last_run). Provenance (OS + Tesseract version + pipeline) is recorded so an
-environment delta is diagnosable (docs/quality-gates.md, re-baseline
-procedure).
+pepper, 2x upscale) on the Committed 20 with the real engine and adds the
+result as an entry in data/baselines/metrics.json `baselines` (schema 3).
+Provenance (OS + Tesseract version + pipeline) is recorded; an entry with
+the same (os_family, tesseract_version) is replaced, otherwise appended —
+other entries (other environments) are never touched.
 
-This script is the ONLY writer of the `baseline` section. Running it +
+This script (fresh measurement) and scripts/add_baseline.py (entry from a
+logged CI run record) are the ONLY writers of `baselines`. Running either +
 committing the result is a logged re-baseline act — never run silently.
+For a CI environment, prefer add_baseline.py on the CI artifact over
+re-measuring locally.
 """
 import json
 import os
@@ -69,32 +73,47 @@ def main():
     blur = [r["cer_blur"] for r in rows]
     sum_l = sum(r["cer_noise_l"] for r in rows)
     sum_h = sum(r["cer_noise_h"] for r in rows)
-    metrics = {
-        "schema": 2,
-        "baseline": {
-            "provenance": get_provenance(),
-            "generated": now_iso(),
-            "receipts": len(rows),
-            "clean_cer_mean": round(sum(clean) / len(clean), 4),
-            "blur_cer_mean": round(sum(blur) / len(blur), 4),
-            "m2_sums": {"noise_l": round(sum_l, 4), "noise_h": round(sum_h, 4)},
-            "avg_ocr_s": round(t_sum / n_ocr, 3),
-            "by_receipt": rows,
-        },
-        "last_run": None,
+    entry = {
+        "provenance": get_provenance(),
+        "generated": now_iso(),
+        "receipts": len(rows),
+        "clean_cer_mean": round(sum(clean) / len(clean), 4),
+        "blur_cer_mean": round(sum(blur) / len(blur), 4),
+        "m2_sums": {"noise_l": round(sum_l, 4), "noise_h": round(sum_h, 4)},
+        "avg_ocr_s": round(t_sum / n_ocr, 3),
+        "by_receipt": rows,
     }
+    metrics = {"schema": 3, "baselines": [], "last_run": None}
+    if os.path.exists(OUT):
+        with open(OUT, encoding="utf-8") as fh:
+            old = json.load(fh)
+        if isinstance(old.get("baselines"), list):
+            metrics["baselines"] = old["baselines"]
+        elif isinstance(old.get("baseline"), dict):  # legacy schema 2
+            metrics["baselines"] = [dict(old["baseline"], id=1)]
+        metrics["last_run"] = old.get("last_run")
+    prov = entry["provenance"]
+    metrics["baselines"] = [
+        e for e in metrics["baselines"]
+        if not (e.get("provenance", {}).get("os_family") == prov["os_family"]
+                and e.get("provenance", {}).get("tesseract_version") == prov["tesseract_version"])
+    ]
+    entry["id"] = max([e.get("id", 0) for e in metrics["baselines"]] + [0]) + 1
+    metrics["baselines"].append(entry)
+    metrics["baselines"].sort(key=lambda e: e.get("id", 0))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(metrics, fh, indent=2)
 
     print()
-    print(f"mean clean CER = {metrics['baseline']['clean_cer_mean']:.4f}")
-    print(f"mean blur  CER = {metrics['baseline']['blur_cer_mean']:.4f}")
+    print(f"baseline #{entry['id']}")
+    print(f"mean clean CER = {entry['clean_cer_mean']:.4f}")
+    print(f"mean blur  CER = {entry['blur_cer_mean']:.4f}")
     print(f"M2 aggregate   = sum_light {sum_l:.4f} -> sum_heavy {sum_h:.4f} "
           f"({'monotonic: OK' if sum_h >= sum_l else 'VIOLATION'})")
-    print(f"avg OCR time   = {metrics['baseline']['avg_ocr_s']} s over {n_ocr} OCR calls")
-    print(f"provenance     = {metrics['baseline']['provenance']}")
-    print(f"wrote {OUT} (baseline section; last_run reset to null)")
+    print(f"avg OCR time   = {entry['avg_ocr_s']} s over {n_ocr} OCR calls")
+    print(f"provenance     = {entry['provenance']}")
+    print(f"wrote {OUT} (entry #{entry['id']}; other entries + last_run untouched)")
 
 
 if __name__ == "__main__":

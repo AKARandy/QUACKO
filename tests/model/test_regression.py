@@ -1,18 +1,20 @@
-"""REG-1/REG-2 regression gate (HARD GATE, Option C, user order 2026-09-14).
+"""REG-1/REG-2 regression gate (HARD GATE, Option C, user order 2026-09-14;
+multi-baseline selection per user order 2026-09-14).
 
 Per-receipt CER (clean, blur) must not degrade by more than 10% relative to
-the committed baseline (data/baselines/metrics.json, `baseline` section):
+the SELECTED baseline — the entry in data/baselines/metrics.json `baselines`
+whose provenance (os_family + tesseract_version) matches the running
+environment:
     run_cer <= max(0.01, 1.10 x baseline_cer)
 The 0.01 absolute floor is a labeled judgment parameter: it covers receipts
 whose baseline CER is exactly 0.0, where '10% of zero' is unusable.
 
-Provenance-aware (addendum 2026-09-14): if the current run's OS / Tesseract
-version / pipeline differs from the baseline's provenance, violations are
-reported as an ENVIRONMENT DELTA — the documented fix is a re-baseline from
-CI artifacts under a logged order (docs/quality-gates.md), not a gate edit.
-Environment-delta violations are NOT captured in the failure gallery (the
-gallery is for genuine model misses); the baseline section is never touched
-by a run.
+Fail-closed (addendum 2026-09-14): if no baseline entry matches the current
+provenance, the gate FAILS with an explicit ENV-DELTA error naming the
+mismatch — never a silent cross-environment comparison. The fix is a logged
+re-baseline (scripts/add_baseline.py from CI artifacts, or
+scripts/calibrate.py), never a gate edit. The `baselines` list is never
+touched by a run.
 """
 import json
 import os
@@ -25,7 +27,7 @@ FLOOR = 0.01
 BASELINE_PATH = os.path.join(ROOT, "data", "baselines", "metrics.json")
 
 
-def _baseline():
+def _entries():
     if not os.path.exists(BASELINE_PATH):
         raise RuntimeError(
             "DATA-ERR: data/baselines/metrics.json missing — re-baseline "
@@ -33,53 +35,59 @@ def _baseline():
         )
     with open(BASELINE_PATH, encoding="utf-8") as fh:
         m = json.load(fh)
-    base = m.get("baseline")
-    if not base:
-        raise RuntimeError("DATA-ERR: metrics.json has no `baseline` section (schema 2 required)")
-    return base
+    if isinstance(m.get("baselines"), list) and m["baselines"]:
+        return m["baselines"]
+    if isinstance(m.get("baseline"), dict):  # legacy schema 2, single entry
+        return [dict(m["baseline"], id=1)]
+    raise RuntimeError("DATA-ERR: metrics.json has no `baselines` list (schema 3 required)")
 
 
-def _env_delta(base_prov: dict):
+def _select_baseline():
+    """Return the baseline entry matching this environment, or fail closed."""
+    entries = _entries()
     cur = get_provenance()
-    diffs = [k for k in ("tesseract_version", "os_family", "pipeline") if cur.get(k) != base_prov.get(k)]
-    return diffs, cur
+    hits = [
+        b for b in entries
+        if b.get("provenance", {}).get("os_family") == cur.get("os_family")
+        and b.get("provenance", {}).get("tesseract_version") == cur.get("tesseract_version")
+    ]
+    if len(hits) == 1:
+        return hits[0]
+    known = [f"#{b.get('id')}: {b.get('provenance', {}).get('os_family')}/"
+             f"Tesseract {b.get('provenance', {}).get('tesseract_version')}" for b in entries]
+    assert False, (
+        "REG ENV-DELTA (fail closed): no baseline matches current provenance "
+        f"{cur.get('os_family')}/Tesseract {cur.get('tesseract_version')} "
+        f"({len(hits)} matches; known baselines: {'; '.join(known)}). "
+        "Add one via scripts/add_baseline.py from a real run record under a "
+        "logged order (docs/quality-gates.md) — never compare cross-environment."
+    )
 
 
 def _check(kind: str, ocr_all):
-    base = _baseline()
+    base = _select_baseline()
     base_by = {r["file"]: r[f"cer_{kind}"] for r in base["by_receipt"]}
-    diffs, cur = _env_delta(base["provenance"])
-    delta = bool(diffs)
     bad = []
     for rec in ocr_all["receipts"]:
         b = base_by.get(rec["file"])
         if b is None:
-            raise RuntimeError(f"DATA-ERR: {rec['file']} missing from baseline by_receipt")
+            raise RuntimeError(f"DATA-ERR: {rec['file']} missing from baseline #{base.get('id')} by_receipt")
         limit = max(FLOOR, REL * b)
         c = rec[kind]["cer"]
         if c > limit:
-            msg = (
-                f"{rec['file']}: {kind} CER {c:.4f} > {limit:.4f} "
-                f"(baseline {b:.4f}; rule: max(0.01, 1.10 x baseline))"
+            set_gallery_ctx(
+                file=rec["file"],
+                input_bytes=rec["bytes"],
+                gt=rec["gt"],
+                pred=rec[kind]["text"],
+                cer=round(c, 4),
+                assertion=f"REG-{kind.upper()} (baseline #{base.get('id')}): CER {c:.4f} > baseline {b:.4f} + 10%",
+                defect_class="model-error",
             )
-            if delta:
-                msg += (
-                    f" [ENVIRONMENT DELTA: baseline {base['provenance']['os_family']}/"
-                    f"Tesseract {base['provenance']['tesseract_version']} vs current "
-                    f"{cur['os_family']}/Tesseract {cur['tesseract_version']}; "
-                    f"differs in {diffs} — re-baseline per docs/quality-gates.md]"
-                )
-            else:
-                set_gallery_ctx(
-                    file=rec["file"],
-                    input_bytes=rec["bytes"],
-                    gt=rec["gt"],
-                    pred=rec[kind]["text"],
-                    cer=round(c, 4),
-                    assertion=f"REG-{kind.upper()}: CER {c:.4f} > baseline {b:.4f} + 10%",
-                    defect_class="model-error",
-                )
-            bad.append(msg)
+            bad.append(
+                f"{rec['file']}: {kind} CER {c:.4f} > {limit:.4f} "
+                f"(baseline #{base.get('id')} {b:.4f}; rule: max(0.01, 1.10 x baseline))"
+            )
     assert not bad, f"REG-{kind.upper()} violations:\n" + "\n".join(bad)
 
 

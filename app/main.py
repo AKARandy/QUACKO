@@ -34,15 +34,16 @@ def health():
 
 @app.get("/api/stats")
 def stats():
-    """Dashboard data (schema 2). Real run data only — explicit no-run state,
+    """Dashboard data (schema 3). Real run data only — explicit no-run state,
     never placeholder numbers (NO-LARP). Serves the latest measured run
-    (`last_run`, else the `baseline` measurement) as a flat object, plus
+    (`last_run`, else the first `baselines` entry) as a flat object, plus
     provenance of both sections for the footer."""
     if not os.path.exists(METRICS):
         return jsonify({"status": "no-run"})
     with open(METRICS, encoding="utf-8") as fh:
         m = json.load(fh)
-    run = m.get("last_run") or m.get("baseline")
+    fallbacks = m.get("baselines") or ([m["baseline"]] if m.get("baseline") else [])
+    run = m.get("last_run") or (fallbacks[0] if fallbacks else None)
     if not run:
         return jsonify({"status": "no-run"})
     out = {"status": "ok", "source": "last_run" if m.get("last_run") else "baseline"}
@@ -50,8 +51,8 @@ def stats():
               "m2_sums", "by_receipt", "pass_rate", "provenance"):
         if k in run:
             out[k] = run[k]
-    if m.get("baseline") and m["baseline"].get("provenance"):
-        out["baseline_provenance"] = m["baseline"]["provenance"]
+    if fallbacks and fallbacks[0].get("provenance"):
+        out["baseline_provenance"] = fallbacks[0]["provenance"]
     return jsonify(out)
 
 

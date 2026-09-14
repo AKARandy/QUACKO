@@ -59,8 +59,17 @@ is now `docs/quality-gates.md` (standard ML-QA split: **accuracy = telemetry, st
 Measured 2026-09-14, local Windows-11 / Tesseract 5.5.0.20241111 / Python 3.12.6,
 pipeline `gray+normalize(1600-2400)+gated-deskew+psm6`: API 7/7, invariants 3/3,
 metamorphic 3/3, regression 2/2, UI 3/3 — **all hard gates green (VERIFIED, this
-session)**. CI (ubuntu + apt Tesseract) is a different provenance; first CI run may
-trigger the documented re-baseline procedure.
+session)**. CI (ubuntu + apt Tesseract 5.3.4) is a different provenance; the
+first CI run went REG-red exactly as anticipated (run 34838251428, env-delta,
+4 clean-CER receipts over the line).
+
+**ADDENDUM 2026-09-14 (user order, multi-baseline):** baseline #1 is kept;
+REG selects the `baselines` entry whose provenance (OS + Tesseract version)
+matches the running environment (local Windows → #1, CI → #2); no match →
+REG fails closed with an explicit ENV-DELTA error, never a silent
+cross-environment comparison. Writers: `scripts/calibrate.py` (fresh measure)
++ `scripts/add_baseline.py` (entry from a logged CI run record); metrics
+schema 2 → 3. Live spec: `docs/quality-gates.md`.
 
 ## 1. Facts verified on this machine (2026-09-14, this session)
 

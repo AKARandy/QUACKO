@@ -66,5 +66,6 @@ restored and the suite re-ran green (raw artifacts kept on disk under
   with full provenance (`data/golden/PROVENANCE-20.md`). Tests re-verify every hash on load.
 - Three tiers, enforced in code (pytest asserts): **hard gates** (contract, invariants,
   metamorphic, regression) · **accuracy telemetry** (CER measured + displayed, never
-  gated) · **regression baseline** (10% relative, provenance-stamped). Every change is
+  gated) · **regression baselines** (10% relative, provenance-matched; REG fails
+  closed on unknown environments). Every change is
   logged in [Quality Gates](quality-gates.md).

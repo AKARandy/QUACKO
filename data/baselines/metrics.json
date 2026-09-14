@@ -1,225 +1,228 @@
 {
-  "schema": 2,
-  "baseline": {
-    "provenance": {
-      "os": "Windows-11-10.0.26200-SP0",
-      "os_family": "windows",
-      "tesseract_version": "5.5.0.20241111",
-      "python": "3.12.6",
-      "pipeline": "gray+normalize(1600-2400)+gated-deskew+psm6"
-    },
-    "generated": "2026-09-14T10:53:38+00:00",
-    "receipts": 20,
-    "clean_cer_mean": 0.078,
-    "blur_cer_mean": 0.0977,
-    "m2_sums": {
-      "noise_l": 6.389,
-      "noise_h": 11.2355
-    },
-    "avg_ocr_s": 1.136,
-    "by_receipt": [
-      {
-        "file": "img_0000.jpg",
-        "conf": 0.7995,
-        "cer_clean": 0.011,
-        "cer_blur": 0.044,
-        "cer_rot": 0.011,
-        "cer_noise_l": 0.3516,
-        "cer_noise_h": 0.5275,
-        "cer_up2": 0.011
+  "schema": 3,
+  "baselines": [
+    {
+      "provenance": {
+        "os": "Windows-11-10.0.26200-SP0",
+        "os_family": "windows",
+        "tesseract_version": "5.5.0.20241111",
+        "python": "3.12.6",
+        "pipeline": "gray+normalize(1600-2400)+gated-deskew+psm6"
       },
-      {
-        "file": "img_0022.jpg",
-        "conf": 0.6503,
-        "cer_clean": 0.0505,
-        "cer_blur": 0.3333,
-        "cer_rot": 0.0606,
-        "cer_noise_l": 0.4343,
-        "cer_noise_h": 0.697,
-        "cer_up2": 0.0202
+      "generated": "2026-09-14T10:53:38+00:00",
+      "receipts": 20,
+      "clean_cer_mean": 0.078,
+      "blur_cer_mean": 0.0977,
+      "m2_sums": {
+        "noise_l": 6.389,
+        "noise_h": 11.2355
       },
-      {
-        "file": "img_0052.jpg",
-        "conf": 0.7848,
-        "cer_clean": 0.0187,
-        "cer_blur": 0.0187,
-        "cer_rot": 0.0561,
-        "cer_noise_l": 0.4766,
-        "cer_noise_h": 0.8972,
-        "cer_up2": 0.0187
-      },
-      {
-        "file": "img_0089.jpg",
-        "conf": 0.8027,
-        "cer_clean": 0.1533,
-        "cer_blur": 0.1533,
-        "cer_rot": 0.146,
-        "cer_noise_l": 0.2044,
-        "cer_noise_h": 0.7445,
-        "cer_up2": 0.1606
-      },
-      {
-        "file": "img_0115.jpg",
-        "conf": 0.7744,
-        "cer_clean": 0.0303,
-        "cer_blur": 0.0303,
-        "cer_rot": 0.0455,
-        "cer_noise_l": 0.0606,
-        "cer_noise_h": 0.0606,
-        "cer_up2": 0.0152
-      },
-      {
-        "file": "img_0150.jpg",
-        "conf": 0.7055,
-        "cer_clean": 0.1953,
-        "cer_blur": 0.25,
-        "cer_rot": 0.1875,
-        "cer_noise_l": 0.2656,
-        "cer_noise_h": 0.5469,
-        "cer_up2": 0.2109
-      },
-      {
-        "file": "img_0182.jpg",
-        "conf": 0.7842,
-        "cer_clean": 0.1606,
-        "cer_blur": 0.1606,
-        "cer_rot": 0.1533,
-        "cer_noise_l": 0.1752,
-        "cer_noise_h": 0.1606,
-        "cer_up2": 0.1533
-      },
-      {
-        "file": "img_0250.jpg",
-        "conf": 0.7276,
-        "cer_clean": 0.1871,
-        "cer_blur": 0.1655,
-        "cer_rot": 0.1871,
-        "cer_noise_l": 1.0,
-        "cer_noise_h": 0.7914,
-        "cer_up2": 0.1655
-      },
-      {
-        "file": "img_0302.jpg",
-        "conf": 0.7331,
-        "cer_clean": 0.045,
-        "cer_blur": 0.018,
-        "cer_rot": 0.0541,
-        "cer_noise_l": 0.2883,
-        "cer_noise_h": 0.4505,
-        "cer_up2": 0.045
-      },
-      {
-        "file": "img_0345.jpg",
-        "conf": 0.6869,
-        "cer_clean": 0.1926,
-        "cer_blur": 0.2148,
-        "cer_rot": 0.163,
-        "cer_noise_l": 0.5333,
-        "cer_noise_h": 0.6889,
-        "cer_up2": 0.2
-      },
-      {
-        "file": "img_0381.jpg",
-        "conf": 0.7707,
-        "cer_clean": 0.025,
-        "cer_blur": 0.0667,
-        "cer_rot": 0.0667,
-        "cer_noise_l": 0.5667,
-        "cer_noise_h": 0.6417,
-        "cer_up2": 0.0833
-      },
-      {
-        "file": "img_0435.jpg",
-        "conf": 0.701,
-        "cer_clean": 0.0833,
-        "cer_blur": 0.0,
-        "cer_rot": 0.0833,
-        "cer_noise_l": 0.0556,
-        "cer_noise_h": 0.5,
-        "cer_up2": 0.0556
-      },
-      {
-        "file": "img_0489.jpg",
-        "conf": 0.7421,
-        "cer_clean": 0.0732,
-        "cer_blur": 0.122,
-        "cer_rot": 0.061,
-        "cer_noise_l": 0.1707,
-        "cer_noise_h": 0.6951,
-        "cer_up2": 0.0732
-      },
-      {
-        "file": "img_0542.jpg",
-        "conf": 0.7449,
-        "cer_clean": 0.0526,
-        "cer_blur": 0.0842,
-        "cer_rot": 0.0421,
-        "cer_noise_l": 0.0842,
-        "cer_noise_h": 0.7684,
-        "cer_up2": 0.0421
-      },
-      {
-        "file": "img_0589.jpg",
-        "conf": 0.6767,
-        "cer_clean": 0.0789,
-        "cer_blur": 0.0658,
-        "cer_rot": 0.1316,
-        "cer_noise_l": 0.0789,
-        "cer_noise_h": 0.5395,
-        "cer_up2": 0.0658
-      },
-      {
-        "file": "img_0667.jpg",
-        "conf": 0.7515,
-        "cer_clean": 0.1132,
-        "cer_blur": 0.1132,
-        "cer_rot": 0.0755,
-        "cer_noise_l": 0.6509,
-        "cer_noise_h": 1.0,
-        "cer_up2": 0.0943
-      },
-      {
-        "file": "img_0721.jpg",
-        "conf": 0.7283,
-        "cer_clean": 0.0543,
-        "cer_blur": 0.0543,
-        "cer_rot": 0.087,
-        "cer_noise_l": 0.0761,
-        "cer_noise_h": 0.0543,
-        "cer_up2": 0.0761
-      },
-      {
-        "file": "img_0818.jpg",
-        "conf": 0.8468,
-        "cer_clean": 0.0,
-        "cer_blur": 0.0101,
-        "cer_rot": 0.0,
-        "cer_noise_l": 0.1414,
-        "cer_noise_h": 0.4949,
-        "cer_up2": 0.0
-      },
-      {
-        "file": "img_0883.jpg",
-        "conf": 0.7842,
-        "cer_clean": 0.0,
-        "cer_blur": 0.0139,
-        "cer_rot": 0.0139,
-        "cer_noise_l": 0.5833,
-        "cer_noise_h": 0.4722,
-        "cer_up2": 0.0
-      },
-      {
-        "file": "img_0963.jpg",
-        "conf": 0.7568,
-        "cer_clean": 0.0348,
-        "cer_blur": 0.0348,
-        "cer_rot": 0.0435,
-        "cer_noise_l": 0.1913,
-        "cer_noise_h": 0.5043,
-        "cer_up2": 0.0174
-      }
-    ]
-  },
+      "avg_ocr_s": 1.136,
+      "by_receipt": [
+        {
+          "file": "img_0000.jpg",
+          "conf": 0.7995,
+          "cer_clean": 0.011,
+          "cer_blur": 0.044,
+          "cer_rot": 0.011,
+          "cer_noise_l": 0.3516,
+          "cer_noise_h": 0.5275,
+          "cer_up2": 0.011
+        },
+        {
+          "file": "img_0022.jpg",
+          "conf": 0.6503,
+          "cer_clean": 0.0505,
+          "cer_blur": 0.3333,
+          "cer_rot": 0.0606,
+          "cer_noise_l": 0.4343,
+          "cer_noise_h": 0.697,
+          "cer_up2": 0.0202
+        },
+        {
+          "file": "img_0052.jpg",
+          "conf": 0.7848,
+          "cer_clean": 0.0187,
+          "cer_blur": 0.0187,
+          "cer_rot": 0.0561,
+          "cer_noise_l": 0.4766,
+          "cer_noise_h": 0.8972,
+          "cer_up2": 0.0187
+        },
+        {
+          "file": "img_0089.jpg",
+          "conf": 0.8027,
+          "cer_clean": 0.1533,
+          "cer_blur": 0.1533,
+          "cer_rot": 0.146,
+          "cer_noise_l": 0.2044,
+          "cer_noise_h": 0.7445,
+          "cer_up2": 0.1606
+        },
+        {
+          "file": "img_0115.jpg",
+          "conf": 0.7744,
+          "cer_clean": 0.0303,
+          "cer_blur": 0.0303,
+          "cer_rot": 0.0455,
+          "cer_noise_l": 0.0606,
+          "cer_noise_h": 0.0606,
+          "cer_up2": 0.0152
+        },
+        {
+          "file": "img_0150.jpg",
+          "conf": 0.7055,
+          "cer_clean": 0.1953,
+          "cer_blur": 0.25,
+          "cer_rot": 0.1875,
+          "cer_noise_l": 0.2656,
+          "cer_noise_h": 0.5469,
+          "cer_up2": 0.2109
+        },
+        {
+          "file": "img_0182.jpg",
+          "conf": 0.7842,
+          "cer_clean": 0.1606,
+          "cer_blur": 0.1606,
+          "cer_rot": 0.1533,
+          "cer_noise_l": 0.1752,
+          "cer_noise_h": 0.1606,
+          "cer_up2": 0.1533
+        },
+        {
+          "file": "img_0250.jpg",
+          "conf": 0.7276,
+          "cer_clean": 0.1871,
+          "cer_blur": 0.1655,
+          "cer_rot": 0.1871,
+          "cer_noise_l": 1.0,
+          "cer_noise_h": 0.7914,
+          "cer_up2": 0.1655
+        },
+        {
+          "file": "img_0302.jpg",
+          "conf": 0.7331,
+          "cer_clean": 0.045,
+          "cer_blur": 0.018,
+          "cer_rot": 0.0541,
+          "cer_noise_l": 0.2883,
+          "cer_noise_h": 0.4505,
+          "cer_up2": 0.045
+        },
+        {
+          "file": "img_0345.jpg",
+          "conf": 0.6869,
+          "cer_clean": 0.1926,
+          "cer_blur": 0.2148,
+          "cer_rot": 0.163,
+          "cer_noise_l": 0.5333,
+          "cer_noise_h": 0.6889,
+          "cer_up2": 0.2
+        },
+        {
+          "file": "img_0381.jpg",
+          "conf": 0.7707,
+          "cer_clean": 0.025,
+          "cer_blur": 0.0667,
+          "cer_rot": 0.0667,
+          "cer_noise_l": 0.5667,
+          "cer_noise_h": 0.6417,
+          "cer_up2": 0.0833
+        },
+        {
+          "file": "img_0435.jpg",
+          "conf": 0.701,
+          "cer_clean": 0.0833,
+          "cer_blur": 0.0,
+          "cer_rot": 0.0833,
+          "cer_noise_l": 0.0556,
+          "cer_noise_h": 0.5,
+          "cer_up2": 0.0556
+        },
+        {
+          "file": "img_0489.jpg",
+          "conf": 0.7421,
+          "cer_clean": 0.0732,
+          "cer_blur": 0.122,
+          "cer_rot": 0.061,
+          "cer_noise_l": 0.1707,
+          "cer_noise_h": 0.6951,
+          "cer_up2": 0.0732
+        },
+        {
+          "file": "img_0542.jpg",
+          "conf": 0.7449,
+          "cer_clean": 0.0526,
+          "cer_blur": 0.0842,
+          "cer_rot": 0.0421,
+          "cer_noise_l": 0.0842,
+          "cer_noise_h": 0.7684,
+          "cer_up2": 0.0421
+        },
+        {
+          "file": "img_0589.jpg",
+          "conf": 0.6767,
+          "cer_clean": 0.0789,
+          "cer_blur": 0.0658,
+          "cer_rot": 0.1316,
+          "cer_noise_l": 0.0789,
+          "cer_noise_h": 0.5395,
+          "cer_up2": 0.0658
+        },
+        {
+          "file": "img_0667.jpg",
+          "conf": 0.7515,
+          "cer_clean": 0.1132,
+          "cer_blur": 0.1132,
+          "cer_rot": 0.0755,
+          "cer_noise_l": 0.6509,
+          "cer_noise_h": 1.0,
+          "cer_up2": 0.0943
+        },
+        {
+          "file": "img_0721.jpg",
+          "conf": 0.7283,
+          "cer_clean": 0.0543,
+          "cer_blur": 0.0543,
+          "cer_rot": 0.087,
+          "cer_noise_l": 0.0761,
+          "cer_noise_h": 0.0543,
+          "cer_up2": 0.0761
+        },
+        {
+          "file": "img_0818.jpg",
+          "conf": 0.8468,
+          "cer_clean": 0.0,
+          "cer_blur": 0.0101,
+          "cer_rot": 0.0,
+          "cer_noise_l": 0.1414,
+          "cer_noise_h": 0.4949,
+          "cer_up2": 0.0
+        },
+        {
+          "file": "img_0883.jpg",
+          "conf": 0.7842,
+          "cer_clean": 0.0,
+          "cer_blur": 0.0139,
+          "cer_rot": 0.0139,
+          "cer_noise_l": 0.5833,
+          "cer_noise_h": 0.4722,
+          "cer_up2": 0.0
+        },
+        {
+          "file": "img_0963.jpg",
+          "conf": 0.7568,
+          "cer_clean": 0.0348,
+          "cer_blur": 0.0348,
+          "cer_rot": 0.0435,
+          "cer_noise_l": 0.1913,
+          "cer_noise_h": 0.5043,
+          "cer_up2": 0.0174
+        }
+      ],
+      "id": 1
+    }
+  ],
   "last_run": {
     "provenance": {
       "os": "Windows-11-10.0.26200-SP0",

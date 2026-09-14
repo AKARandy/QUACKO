@@ -1,11 +1,11 @@
 """Merge a real run's results into the `last_run` section of
-data/baselines/metrics.json (schema 2, Option C architecture).
+data/baselines/metrics.json (schema 3, Option C architecture).
 
 Sources (all from this run): report/junit-api-model.xml + report/junit-ui.xml
 (pass rates) and report/cer-run.json (measured CER telemetry + provenance).
-The `baseline` section is NEVER touched here — re-baselining is an explicit,
-logged act (scripts/calibrate.py). No rate or value is invented: absent
-inputs are simply absent from the output.
+The `baselines` list is NEVER touched here — re-baselining is an explicit,
+logged act (scripts/calibrate.py, scripts/add_baseline.py). No rate or value
+is invented: absent inputs are simply absent from the output.
 """
 import json
 import os
@@ -68,8 +68,12 @@ def main():
     if os.path.exists(METRICS):
         with open(METRICS, encoding="utf-8") as fh:
             m = json.load(fh)
-    if m.get("schema") != 2:
-        m = {"schema": 2, "baseline": None, "last_run": {k: v for k, v in m.items() if k != "schema"}}
+    if m.get("schema") == 2 and isinstance(m.get("baseline"), dict):  # legacy
+        m = {"schema": 3, "baselines": [dict(m["baseline"], id=1)],
+             "last_run": m.get("last_run")}
+    if m.get("schema") != 3 or not isinstance(m.get("baselines"), list):
+        m = {"schema": 3, "baselines": m.get("baselines") if isinstance(m.get("baselines"), list) else [],
+             "last_run": m.get("last_run") if isinstance(m.get("last_run"), dict) else {}}
 
     last = cer if cer is not None else dict(m.get("last_run") or {})
     if stats:
