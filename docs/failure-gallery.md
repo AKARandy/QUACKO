@@ -1,6 +1,6 @@
 # Failure Gallery
 
-Generated 2026-09-14T11:08:01+00:00 by `scripts/gen_gallery.py` from **real test failures only** — every entry below is a captured miss: input | degraded variant | ground truth | prediction | defect class.
+Generated 2026-09-14T11:25:26+00:00 by `scripts/gen_gallery.py` from **real test failures only** — every entry below is a captured miss: input | degraded variant | ground truth | prediction | defect class.
 
 **No failures in the latest run.**
 

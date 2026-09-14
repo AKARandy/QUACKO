@@ -53,8 +53,12 @@ Committed 20 (real SROIE receipts, SHA256-pinned, committed in-repo)
 
 ## Screenshot proof (real runs)
 
-Curated batch in `docs/screenshots/` (01–10), captured from real local/CI runs.
+Curated batch in `docs/screenshots/` (01–11), captured from real local/CI runs.
 Hero: `02-result-valid.png` — a real receipt through the real engine.
+`11-gallery-proof.png` is the gallery self-test: M1 was temporarily tightened
+(0.20 → 0.0001), the failure was captured and rendered, then the bound was
+restored and the suite re-ran green (raw artifacts kept on disk under
+`docs/assets/gallery-proof/`).
 
 ## Data & gates
 
