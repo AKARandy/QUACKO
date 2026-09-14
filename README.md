@@ -15,9 +15,26 @@ transformed in memory. Nothing is generated.
 **Stack:** Python · Flask · Tesseract OCR · OpenCV · pytest · Playwright ·
 GitHub Actions · MkDocs Material
 
-**Evidence site:** https://akarandy.github.io/QUACKO/
+**Results site:** https://akarandy.github.io/QUACKO/
 
-## Proof
+## What is this
+
+QUACKO is two things in one repo. First, a small web service: you upload a
+photo of a receipt and it returns the text it can read, how sure it is, and
+boxes around each word it found. The reading is done by Tesseract, an open
+source text-recognition engine, served through a Flask app with a dashboard
+page.
+
+Second, an automated test suite that checks the service keeps working. It
+uploads 20 real photographed receipts, including copies that have been
+blurred, rotated, noised up, or enlarged, and checks the reading still comes
+out right. It checks every API response has the right shape, that bad uploads
+get a proper error message, and it clicks through the dashboard in a real
+Chrome browser. Expected accuracy is saved per environment, so a code change
+that makes readings worse fails the build. Everything runs in GitHub Actions,
+and this page shows what came out.
+
+## Visuals
 
 The dashboard, empty before any upload:
 
