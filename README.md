@@ -27,9 +27,11 @@ comes from a logged real run.
   strict, M3 +0.10), regression 2/2 vs committed baseline, UI 3/3.
   **Accuracy = telemetry** (Option C spec, user order 2026-09-14): clean CER mean
   0.078, blur mean 0.098 — measured + displayed, never gated.
-- **PLANNED:** GitHub repo `AKARandy/QUACKO`, CI (`ci.yml` PR-blocking,
-  `deploy.yml` main + GitHub Pages at `AKARandy.github.io/QUACKO/`).
-  Badges below go live once the repo exists — they are not evidence yet.
+- **LIVE:** GitHub repo `AKARandy/QUACKO`, CI (`ci.yml` PR-blocking,
+  `deploy.yml` main + GitHub Pages at `AKARandy.github.io/QUACKO/`) —
+  badges above are live. CI run 34841512488 green (API 7/7 · model 9/9 vs
+  baseline #2 · UI 3/3); the earlier red runs are the documented env-delta →
+  fail-closed → baseline-#2 trail, not hidden failures.
 - Gate spec + change log + re-baseline procedure: `docs/quality-gates.md`;
   real per-receipt table + provenance: `data/baselines/metrics.json`.
 

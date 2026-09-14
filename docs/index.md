@@ -12,25 +12,30 @@ failure gallery that shows exactly *how* the model fails.
 
 **VERIFIED 2026-09-14 (local: Windows-11 / Tesseract 5.5.0.20241111 / Python 3.12.6):**
 all hard gates green — API 7/7 · invariants 3/3 · metamorphic 3/3 (M1 ≤ 0.20,
-M2 aggregate strict, M3 + 0.10) · regression 2/2 vs committed baseline · UI 3/3.
+M2 aggregate strict, M3 + 0.10) · regression 2/2 vs baseline #1 · UI 3/3.
 
-**Accuracy telemetry (reported, not gated):** field-CER clean mean **0.078**,
-blur mean **0.098** (per-receipt table below, measured every run). Tesseract 5 is a
+**VERIFIED 2026-09-14 (CI: linux / Tesseract 5.3.4 / Python 3.12.14, deploy run
+34841512488):** API 7/7 · model 9/9 (regression vs baseline #2) · UI 3/3 —
+pass_rate 1.0 / 1.0 / 1.0.
+
+**Accuracy telemetry (reported, not gated):** field-CER clean mean **0.078**
+local (#1) / **0.080** CI (#2); blur **0.098** / **0.092**. Tesseract 5 is a
 general-purpose engine — field accuracy is shown as telemetry; the gates guarantee
 contract, invariants, stability, and non-regression ([Quality Gates](quality-gates.md),
 Option C spec).
 
-**PLANNED:** GitHub repo `AKARandy/QUACKO`, CI, and this site on GitHub Pages.
-Badges below go live once the repo exists — they are not evidence yet. The CI
-environment (ubuntu + apt Tesseract) has a different provenance than the local
-baseline; the documented re-baseline procedure covers that (Quality Gates §re-baseline).
+**LIVE:** repo [`AKARandy/QUACKO`](https://github.com/AKARandy/QUACKO), CI
+(`ci.yml` PR-blocking, `deploy.yml` main + Pages), this site. The red runs in
+the Actions history are the honest trail, not hidden: first-CI env-delta red →
+fail-closed proof → baseline #2 → green ([Quality Gates](quality-gates.md),
+change log).
 
 ## CI
 
 | Workflow | Purpose | Status |
 |---|---|---|
-| [`ci.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml) | PR: API + Model hard gates (blocking) | — |
-| [`deploy.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml) | main: + UI + site build + Pages | — |
+| [`ci.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml) | PR: API + Model hard gates (blocking) | [![CI](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml) |
+| [`deploy.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml) | main: + UI + site build + Pages | [![Deploy](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml) |
 
 ## Architecture
 
