@@ -35,7 +35,9 @@ jobs:
         run: .venv/bin/python -m pytest tests/api tests/model -v --html=report/api-model.html --self-contained-html --junitxml=report/junit-api-model.xml
       - name: UI tests (chromium headless)
         working-directory: tests/ui
-        run: npm ci && npx playwright install --with-deps chromium && npx playwright test --junit=../../report/junit-ui.xml
+        run: npm ci && npx playwright install --with-deps chromium && npx playwright test
+        # junit comes from playwright.config.ts reporters (../../report/junit-ui.xml);
+        # there is no --junit CLI flag in Playwright 1.63
       - name: Log pass rates (real junit only)
         if: always()
         run: .venv/bin/python scripts/log_run.py
