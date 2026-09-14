@@ -52,12 +52,40 @@ Committed 20 (real SROIE receipts, SHA256-pinned, committed in-repo)
 
 ## Screenshot proof (real runs)
 
-Curated batch in `docs/screenshots/` (01–11), captured from real local/CI runs.
-Hero: `02-result-valid.png` — a real receipt through the real engine.
-`11-gallery-proof.png` is the gallery self-test: M1 was temporarily tightened
-(0.20 → 0.0001), the failure was captured and rendered, then the bound was
-restored and the suite re-ran green (raw artifacts kept on disk under
-`docs/assets/gallery-proof/`).
+<div class="qk-shots">
+  <figure class="qk-shot qk-shot-wide">
+    <img src="screenshots/02-result-valid.png" alt="real receipt read by the engine" loading="lazy">
+    <figcaption>Hero: a real receipt through the real engine (text, confidence, word boxes).</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/01-upload-empty.png" alt="empty dashboard" loading="lazy">
+    <figcaption>Empty dashboard before upload.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/03-error-invalid.png" alt="invalid upload error" loading="lazy">
+    <figcaption>Invalid upload shows the real API error.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/04-clear-reset.png" alt="cleared dashboard" loading="lazy">
+    <figcaption>Clear resets to the empty state.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/06-pytest-report.png" alt="CI pytest report" loading="lazy">
+    <figcaption>CI pytest report: 16/16 green.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/07-playwright-report.png" alt="CI Playwright report" loading="lazy">
+    <figcaption>CI Playwright report: 3/3 green.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/10-ui-match.png" alt="dashboard next to reference design" loading="lazy">
+    <figcaption>Dashboard next to the reference design it matches.</figcaption>
+  </figure>
+  <figure class="qk-shot">
+    <img src="screenshots/11-gallery-proof.png" alt="gallery self-test capture" loading="lazy">
+    <figcaption>Gallery self-test: a forced miss, captured and rendered, then restored to green.</figcaption>
+  </figure>
+</div>
 
 ## Data & gates
 

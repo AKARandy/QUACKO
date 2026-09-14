@@ -93,6 +93,32 @@
   color: #565b78;
 }
 
+/* Screenshot proof grid (static captures, same card language). */
+.qk-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.qk-shot {
+  margin: 0;
+  background: #fff;
+  border: 1px solid #e6e7f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.qk-shot-wide { grid-column: 1 / -1; }
+.qk-shot img {
+  display: block;
+  width: 100%;
+  background: #f6f6fb;
+}
+.qk-shot figcaption {
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: #565b78;
+}
+
 /* Failure gallery: thumbnail grid + lightbox modal. */
 .qk-gal-grid {
   display: grid;
