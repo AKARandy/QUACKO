@@ -7,7 +7,7 @@ QA suite for an OCR service that reads photographed receipts. A small Flask
 app runs receipt images through Tesseract; pytest and Playwright suites cover
 the API, recognition quality under image degradation (blur, rotation, noise,
 upscale), and the dashboard UI. Tests run in GitHub Actions on every PR and
-every push to main, and the reports publish to the evidence site.
+every push to main, and the reports publish to the results site.
 
 Test data is 20 real photographed receipts, hash-pinned in the repo and
 transformed in memory. Nothing is generated.
