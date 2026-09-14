@@ -36,11 +36,6 @@ Clear resets everything back to the empty state:
 
 ![Cleared dashboard](docs/screenshots/04-clear-reset.png)
 
-GitHub Actions history: checks on every PR, full suite plus site deploy on
-every push to main:
-
-![Actions history](docs/screenshots/05-actions-green.png)
-
 The pytest report from CI: 16/16 API and model tests green:
 
 ![pytest report](docs/screenshots/06-pytest-report.png)
