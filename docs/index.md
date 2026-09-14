@@ -1,34 +1,28 @@
-# QUACKO
+<div class="qk-hero" id="qk-dash">
+  <h1 class="qk-title">QUACKO</h1>
+  <p class="qk-sub">QA dashboard for a Tesseract OCR receipt reader. Every widget below is fed by the latest logged CI run. Full spec: <a href="quality-gates/">Quality Gates</a>.</p>
+  <div class="qk-pills">
+    <span class="qk-pill" id="pill-api" data-label="API CONTRACT">API CONTRACT: LOADING</span>
+    <span class="qk-pill" id="pill-model" data-label="MODEL GATES">MODEL GATES: LOADING</span>
+    <span class="qk-pill" id="pill-ui" data-label="UI SUITE">UI SUITE: LOADING</span>
+    <span class="qk-pill" id="pill-cer" data-label="CER TELEMETRY">CER TELEMETRY: LOADING</span>
+  </div>
+  <div class="qk-grid">
+    <div class="qk-card"><div class="qk-num" id="m-receipts">--</div><div class="qk-label">Total receipts</div></div>
+    <div class="qk-card"><div class="qk-num" id="m-clean">--</div><div class="qk-label">Clean CER mean</div></div>
+    <div class="qk-card"><div class="qk-num" id="m-blur">--</div><div class="qk-label">Blur CER mean</div></div>
+    <div class="qk-card"><div class="qk-num" id="m-reg">--</div><div class="qk-label">Regression status</div></div>
+  </div>
+  <p class="qk-src" id="dash-src">Loading run data...</p>
+</div>
 
-Multi-layer QA suite for a **real** OCR SUT: Flask + Tesseract 5, the **Committed 20**
-(SHA256-pinned real SROIE receipts, in-repo), in-memory seeded degradation, and a
-failure gallery that shows exactly *how* the model fails.
+<div class="qk-chart-wrap">
+  <h2>Clean vs blur CER per receipt</h2>
+  <div class="qk-chart-box" id="cer-box"><canvas id="cer-chart"></canvas></div>
+  <p class="qk-note">Field-CER per receipt (percent). CER is telemetry here: measured and shown, never a pass/fail gate. <a href="failure-gallery/">Failure gallery</a> · <a href="reports/api-model.html">pytest report</a> · <a href="reports/ui-report/">Playwright report</a></p>
+</div>
 
-> **Honesty rule (binding):** every number on this site comes from a logged real run
-> (see [Quality Gates](quality-gates.md)). No placeholder metrics, no stub engine, no
-> hidden failures. Pre-run dashboard states say "no run yet" — they never invent numbers.
-
-## Status (honest, per NO-LARP)
-
-**VERIFIED 2026-09-14 (local: Windows-11 / Tesseract 5.5.0.20241111 / Python 3.12.6):**
-all hard gates green — API 7/7 · invariants 3/3 · metamorphic 3/3 (M1 ≤ 0.20,
-M2 aggregate strict, M3 + 0.10) · regression 2/2 vs baseline #1 · UI 3/3.
-
-**VERIFIED 2026-09-14 (CI: linux / Tesseract 5.3.4 / Python 3.12.14, deploy run
-34841512488):** API 7/7 · model 9/9 (regression vs baseline #2) · UI 3/3 —
-pass_rate 1.0 / 1.0 / 1.0.
-
-**Accuracy telemetry (reported, not gated):** field-CER clean mean **0.078**
-local (#1) / **0.080** CI (#2); blur **0.098** / **0.092**. Tesseract 5 is a
-general-purpose engine — field accuracy is shown as telemetry; the gates guarantee
-contract, invariants, stability, and non-regression ([Quality Gates](quality-gates.md),
-Option C spec).
-
-**LIVE:** repo [`AKARandy/QUACKO`](https://github.com/AKARandy/QUACKO), CI
-(`ci.yml` PR-blocking, `deploy.yml` main + Pages), this site. The red runs in
-the Actions history are the honest trail, not hidden: first-CI env-delta red →
-fail-closed proof → baseline #2 → green ([Quality Gates](quality-gates.md),
-change log).
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 ## CI
 

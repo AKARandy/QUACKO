@@ -23,6 +23,11 @@ theme:
     - content.code.copy
 exclude_docs: |
   history/**
+extra_css:
+  - css/dashboard.css
+extra_javascript:
+  - js/dashboard.js
+  - js/gallery.js
 nav:
   - Home: index.md
   - Test Strategy: test-strategy.md

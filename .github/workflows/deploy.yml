@@ -68,7 +68,8 @@ jobs:
         run: python -m venv .venv && .venv/bin/pip install -r requirements.txt
       - name: Assemble site assets (real reports + real failures only)
         run: |
-          mkdir -p docs/reports docs/assets/failures
+          mkdir -p docs/reports docs/assets/failures docs/assets/data
+          if [ -f data/baselines/metrics.json ]; then cp data/baselines/metrics.json docs/assets/data/metrics.json; fi
           if [ -f report/api-model.html ]; then cp report/api-model.html docs/reports/api-model.html; fi
           if [ -d tests/ui/playwright-report ]; then cp -r tests/ui/playwright-report docs/reports/ui-report; fi
           .venv/bin/python scripts/gen_gallery.py

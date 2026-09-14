@@ -1,0 +1,213 @@
+/* QUACKO evidence dashboard: pills, metric cards, chart, gallery, modal. */
+
+.qk-hero {
+  background: #232946;
+  color: #fff;
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  margin: 0 0 20px;
+}
+.qk-title {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  color: #fff !important;
+}
+.qk-sub {
+  margin: 6px 0 0;
+  color: #c9cde3;
+  font-size: 0.95rem;
+}
+.qk-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.qk-pill {
+  display: inline-block;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: #565b78;
+  color: #fff;
+  white-space: nowrap;
+}
+.qk-pill.qk-pass { background: #1e7e34; }
+.qk-pill.qk-fail { background: #c0392b; }
+.qk-pill.qk-info { background: #14505c; }
+
+.qk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin: 18px 0 4px;
+}
+.qk-card {
+  background: #fff;
+  color: #232946;
+  border: 1px solid #e6e7f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.qk-num {
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.qk-num.qk-good { color: #1e7e34; }
+.qk-num.qk-bad { color: #c0392b; }
+.qk-label {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #565b78;
+  font-weight: 600;
+}
+.qk-src {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: #8a8fa8;
+}
+.qk-note {
+  font-size: 0.8rem;
+  color: #8a8fa8;
+}
+
+.qk-chart-wrap { margin: 26px 0 6px; }
+.qk-chart-wrap h2 { margin-bottom: 10px; }
+.qk-chart-box {
+  position: relative;
+  height: 340px;
+  background: #fff;
+  border: 1px solid #e6e7f0;
+  border-radius: 14px;
+  padding: 14px;
+}
+.qk-fallback {
+  background: #f6f6fb;
+  border: 1px dashed #c9cde3;
+  border-radius: 14px;
+  padding: 22px;
+  color: #565b78;
+}
+
+/* Failure gallery: thumbnail grid + lightbox modal. */
+.qk-gal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.qk-gal-card {
+  margin: 0;
+  background: #fff;
+  border: 1px solid #e6e7f0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.qk-gal-card:hover { border-color: #14505c; }
+.qk-gal-card img {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  object-position: top;
+  background: #f6f6fb;
+}
+.qk-gal-card figcaption { padding: 10px 12px; }
+.qk-gal-card figcaption b {
+  display: block;
+  font-size: 0.82rem;
+  word-break: break-all;
+}
+.qk-gal-card figcaption span {
+  font-size: 0.76rem;
+  color: #8a8fa8;
+}
+.qk-empty {
+  background: #f6f6fb;
+  border: 1px dashed #c9cde3;
+  border-radius: 14px;
+  padding: 22px;
+}
+.qk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(20, 22, 40, 0.72);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 32px 16px;
+}
+.qk-modal[hidden] { display: none; }
+.qk-modal-box {
+  background: #fff;
+  color: #232946;
+  border-radius: 16px;
+  max-width: 960px;
+  width: 100%;
+  padding: 24px;
+}
+.qk-modal-x {
+  float: right;
+  border: 0;
+  border-radius: 10px;
+  background: #232946;
+  color: #fff;
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qk-m-assert {
+  font-size: 0.85rem;
+  color: #565b78;
+  word-break: break-word;
+}
+.qk-m-imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+.qk-m-imgs figure { margin: 0; }
+.qk-m-imgs img {
+  width: 100%;
+  border: 1px solid #e6e7f0;
+  border-radius: 10px;
+  background: #f6f6fb;
+}
+.qk-m-imgs figcaption {
+  font-size: 0.78rem;
+  color: #8a8fa8;
+  margin-top: 4px;
+}
+.qk-m-texts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.qk-m-texts h4 { margin: 0 0 6px; font-size: 0.85rem; }
+.qk-m-texts pre {
+  margin: 0;
+  background: #f6f6fb;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.75rem;
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+@media (max-width: 640px) {
+  .qk-m-imgs, .qk-m-texts { grid-template-columns: 1fr; }
+  .qk-hero { padding: 20px 18px; }
+}
