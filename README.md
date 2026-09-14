@@ -48,12 +48,6 @@ The dashboard next to the reference design it was built to match:
 
 ![UI comparison](docs/screenshots/10-ui-match.png)
 
-Gallery self-test: a check was deliberately tightened until a real receipt
-missed, the miss was captured and rendered here, then the check was restored
-and the suite re-ran green:
-
-![Gallery self-test](docs/screenshots/11-gallery-proof.png)
-
 ## Layout
 
 - `app/`: the Flask OCR service (`POST /api/ocr`, `GET /health`, dashboard page)
