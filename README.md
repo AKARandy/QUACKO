@@ -17,6 +17,58 @@ GitHub Actions · MkDocs Material
 
 **Evidence site:** https://akarandy.github.io/QUACKO/
 
+## Proof
+
+The dashboard, empty before any upload:
+
+![Empty dashboard](docs/screenshots/01-upload-empty.png)
+
+A real receipt through the real engine — extracted text, confidence ring, and
+word boxes drawn over the preview:
+
+![Valid receipt result](docs/screenshots/02-result-valid.png)
+
+Uploading a non-image shows the API's actual error, no crash:
+
+![Invalid upload error](docs/screenshots/03-error-invalid.png)
+
+Clear resets everything back to the empty state:
+
+![Cleared dashboard](docs/screenshots/04-clear-reset.png)
+
+GitHub Actions history — checks on every PR, full suite plus site deploy on
+every push to main:
+
+![Actions history](docs/screenshots/05-actions-green.png)
+
+The pytest report from CI — 16/16 API and model tests green:
+
+![pytest report](docs/screenshots/06-pytest-report.png)
+
+The Playwright report from CI — 3/3 browser tests green:
+
+![Playwright report](docs/screenshots/07-playwright-report.png)
+
+The failure gallery on the live site — empty because the latest run had no
+failures; any miss would appear here with input, degraded variant, ground
+truth, prediction, and defect class:
+
+![Failure gallery](docs/screenshots/08-failure-gallery.png)
+
+The live evidence site home:
+
+![Evidence site](docs/screenshots/09-github-io-site.png)
+
+The dashboard next to the reference design it was built to match:
+
+![UI comparison](docs/screenshots/10-ui-match.png)
+
+Gallery self-test: a check was deliberately tightened until a real receipt
+missed, the miss was captured and rendered here, then the check was restored
+and the suite re-ran green:
+
+![Gallery self-test](docs/screenshots/11-gallery-proof.png)
+
 ## Layout
 
 - `app/` — the Flask OCR service (`POST /api/ocr`, `GET /health`, dashboard page)
