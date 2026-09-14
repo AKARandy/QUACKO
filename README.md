@@ -49,16 +49,6 @@ The Playwright report from CI: 3/3 browser tests green:
 
 ![Playwright report](docs/screenshots/07-playwright-report.png)
 
-The failure gallery on the live site: empty because the latest run had no
-failures; any miss would appear here with input, degraded variant, ground
-truth, prediction, and defect class:
-
-![Failure gallery](docs/screenshots/08-failure-gallery.png)
-
-The live evidence site home:
-
-![Evidence site](docs/screenshots/09-github-io-site.png)
-
 The dashboard next to the reference design it was built to match:
 
 ![UI comparison](docs/screenshots/10-ui-match.png)
