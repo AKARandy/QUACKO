@@ -1,5 +1,5 @@
 site_name: QUACKO
-site_description: Multi-layer QA suite for a real Tesseract OCR SUT — real data, real engine, real evidence.
+site_description: Multi-layer QA suite for a real Tesseract OCR SUT. Real data, real engine, real evidence.
 site_url: https://AKARandy.github.io/QUACKO/
 repo_url: https://github.com/AKARandy/QUACKO
 theme:
