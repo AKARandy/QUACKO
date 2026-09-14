@@ -10,7 +10,7 @@ upscale), and the dashboard UI. Tests run in GitHub Actions on every PR and
 every push to main, and the reports publish to the evidence site.
 
 Test data is 20 real photographed receipts, hash-pinned in the repo and
-transformed in memory — nothing generated.
+transformed in memory. Nothing is generated.
 
 **Stack:** Python · Flask · Tesseract OCR · OpenCV · pytest · Playwright ·
 GitHub Actions · MkDocs Material
@@ -23,7 +23,7 @@ The dashboard, empty before any upload:
 
 ![Empty dashboard](docs/screenshots/01-upload-empty.png)
 
-A real receipt through the real engine — extracted text, confidence ring, and
+A real receipt through the real engine: extracted text, confidence ring, and
 word boxes drawn over the preview:
 
 ![Valid receipt result](docs/screenshots/02-result-valid.png)
@@ -36,20 +36,20 @@ Clear resets everything back to the empty state:
 
 ![Cleared dashboard](docs/screenshots/04-clear-reset.png)
 
-GitHub Actions history — checks on every PR, full suite plus site deploy on
+GitHub Actions history: checks on every PR, full suite plus site deploy on
 every push to main:
 
 ![Actions history](docs/screenshots/05-actions-green.png)
 
-The pytest report from CI — 16/16 API and model tests green:
+The pytest report from CI: 16/16 API and model tests green:
 
 ![pytest report](docs/screenshots/06-pytest-report.png)
 
-The Playwright report from CI — 3/3 browser tests green:
+The Playwright report from CI: 3/3 browser tests green:
 
 ![Playwright report](docs/screenshots/07-playwright-report.png)
 
-The failure gallery on the live site — empty because the latest run had no
+The failure gallery on the live site: empty because the latest run had no
 failures; any miss would appear here with input, degraded variant, ground
 truth, prediction, and defect class:
 
@@ -71,15 +71,22 @@ and the suite re-ran green:
 
 ## Layout
 
-- `app/` — the Flask OCR service (`POST /api/ocr`, `GET /health`, dashboard page)
-- `tests/api/` · `tests/model/` — pytest suites (contract, invariants, degradation, regression)
-- `tests/ui/` — Playwright specs
-- `data/golden/` — the 20 pinned receipts, labels, hashes
-- `data/baselines/` — committed accuracy baselines, one per environment
-- `docs/` — test strategy, quality gates, failure gallery, screenshots
-- `scripts/` — calibration, run logging, gallery generation
+- `app/`: the Flask OCR service (`POST /api/ocr`, `GET /health`, dashboard page)
+- `tests/api/` · `tests/model/`: pytest suites (contract, invariants, degradation, regression)
+- `tests/ui/`: Playwright specs
+- `data/golden/`: the 20 pinned receipts, labels, hashes
+- `data/baselines/`: committed accuracy baselines, one per environment
+- `docs/`: test strategy, quality gates, failure gallery, screenshots
+- `scripts/`: calibration, run logging, gallery generation
 
-## Quickstart (local)
+## Clone
+
+```powershell
+git clone https://github.com/AKARandy/QUACKO.git
+cd QUACKO
+```
+
+## Use (local)
 
 ```powershell
 python -m venv .venv
