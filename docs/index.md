@@ -1,98 +1,87 @@
-<div class="qk-hero" id="qk-dash">
-  <h1 class="qk-title">QUACKO</h1>
-  <p class="qk-sub">QA dashboard for a Tesseract OCR receipt reader. Every widget below is fed by the latest logged CI run. Full spec: <a href="quality-gates/">Quality Gates</a>.</p>
-  <div class="qk-pills">
-    <span class="qk-pill" id="pill-api" data-label="API CONTRACT">API CONTRACT: LOADING</span>
-    <span class="qk-pill" id="pill-model" data-label="MODEL GATES">MODEL GATES: LOADING</span>
-    <span class="qk-pill" id="pill-ui" data-label="UI SUITE">UI SUITE: LOADING</span>
-    <span class="qk-pill" id="pill-cer" data-label="CER TELEMETRY">CER TELEMETRY: LOADING</span>
-  </div>
-  <div class="qk-grid">
-    <div class="qk-card"><div class="qk-num" id="m-receipts">--</div><div class="qk-label">Total receipts</div></div>
-    <div class="qk-card"><div class="qk-num" id="m-clean">--</div><div class="qk-label">Clean CER mean</div></div>
-    <div class="qk-card"><div class="qk-num" id="m-blur">--</div><div class="qk-label">Blur CER mean</div></div>
-    <div class="qk-card"><div class="qk-num" id="m-reg">--</div><div class="qk-label">Regression status</div></div>
-  </div>
-  <p class="qk-src" id="dash-src">Loading run data...</p>
-</div>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<div class="qk-chart-wrap">
-  <h2>Clean vs blur CER per receipt</h2>
-  <div class="qk-chart-box" id="cer-box"><canvas id="cer-chart"></canvas></div>
-  <p class="qk-note">Field-CER per receipt (percent). CER is telemetry here: measured and shown, never a pass/fail gate. <a href="failure-gallery/">Failure gallery</a> · <a href="reports/api-model.html">pytest report</a> · <a href="reports/ui-report/">Playwright report</a></p>
+<div class="bg-slate-900 text-white min-h-screen p-8 font-sans rounded-2xl" id="qk-dash">
+  <h1 class="text-3xl font-bold tracking-widest">QUACKO</h1>
+  <p class="text-slate-400 mt-2">QA dashboard for a Tesseract OCR receipt reader. Every widget below is fed by the latest logged CI run.</p>
+
+  <div class="flex flex-wrap gap-2 mt-5">
+    <span id="pill-api" data-label="API CONTRACT" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap bg-slate-700 text-slate-300">API CONTRACT: LOADING</span>
+    <span id="pill-model" data-label="MODEL GATES" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap bg-slate-700 text-slate-300">MODEL GATES: LOADING</span>
+    <span id="pill-ui" data-label="UI SUITE" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap bg-slate-700 text-slate-300">UI SUITE: LOADING</span>
+    <span id="pill-cer" data-label="CER TELEMETRY" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap bg-slate-700 text-slate-300">CER TELEMETRY: LOADING</span>
+  </div>
+
+  <div class="grid !grid-cols-2 lg:!grid-cols-4 gap-6 mt-6">
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <div class="text-2xl font-bold whitespace-nowrap" id="m-receipts">--</div>
+      <div class="text-slate-400 text-xs mt-1">Total receipts</div>
+    </div>
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <div class="text-2xl font-bold whitespace-nowrap" id="m-clean">--</div>
+      <div class="text-slate-400 text-xs mt-1">Clean CER mean</div>
+    </div>
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <div class="text-2xl font-bold whitespace-nowrap" id="m-blur">--</div>
+      <div class="text-slate-400 text-xs mt-1">Blur CER mean</div>
+    </div>
+    <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <div class="text-xl font-bold whitespace-nowrap" id="m-reg">--</div>
+      <div class="text-slate-400 text-xs mt-1">Regression status</div>
+    </div>
+  </div>
+  <p class="text-slate-500 text-xs mt-4" id="dash-src">Loading run data...</p>
+
+  <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 mt-8">
+    <h2 class="text-xl font-bold mb-4">Clean vs blur CER per receipt</h2>
+    <div class="relative h-80" id="cer-box"><canvas id="cer-chart"></canvas></div>
+    <p class="text-slate-500 text-xs mt-4">Field-CER per receipt (percent). CER is telemetry: measured and shown, never a pass/fail gate.</p>
+  </div>
+
+  <h2 class="text-xl font-bold mt-10 mb-4">Screenshot proof (real runs)</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden md:col-span-2">
+      <img src="screenshots/02-result-valid.png" alt="real receipt read by the engine" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Hero: a real receipt through the real engine (text, confidence, word boxes).</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/01-upload-empty.png" alt="empty dashboard" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Empty dashboard before upload.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/03-error-invalid.png" alt="invalid upload error" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Invalid upload shows the real API error.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/04-clear-reset.png" alt="cleared dashboard" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Clear resets to the empty state.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/06-pytest-report.png" alt="CI pytest report" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">CI pytest report: 16/16 green.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/07-playwright-report.png" alt="CI Playwright report" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">CI Playwright report: 3/3 green.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/10-ui-match.png" alt="dashboard next to reference design" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Dashboard next to the reference design it matches.</figcaption>
+    </figure>
+    <figure class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <img src="screenshots/11-gallery-proof.png" alt="gallery self-test capture" loading="lazy" class="w-full">
+      <figcaption class="p-4 text-sm text-slate-400">Gallery self-test: a forced miss, captured and rendered, then restored to green.</figcaption>
+    </figure>
+  </div>
+
+  <div class="flex flex-wrap gap-3 mt-10">
+    <a href="failure-gallery/" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Failure gallery</a>
+    <a href="reports/api-model.html" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">pytest report</a>
+    <a href="reports/ui-report/" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Playwright report</a>
+    <a href="https://github.com/AKARandy/QUACKO/actions" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Actions</a>
+    <a href="https://github.com/AKARandy/QUACKO" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Repository</a>
+    <a href="test-strategy/" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Test strategy</a>
+    <a href="quality-gates/" class="border border-slate-700 rounded-full px-4 py-2 text-sm text-teal-300">Quality gates</a>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-## CI
-
-| Workflow | Purpose | Status |
-|---|---|---|
-| [`ci.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml) | PR: API + Model hard gates (blocking) | [![CI](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/ci.yml) |
-| [`deploy.yml`](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml) | main: + UI + site build + Pages | [![Deploy](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml/badge.svg)](https://github.com/AKARandy/QUACKO/actions/workflows/deploy.yml) |
-
-## Architecture
-
-```text
-Committed 20 (real SROIE receipts, SHA256-pinned, committed in-repo)
-  -> Flask SUT: POST /api/ocr · GET /health · GET / (mimics the reference dashboard UI)
-      -> pytest (API): contract / negative / 413 / bounds (latency = telemetry)
-      -> pytest (Model): invariants · metamorphic (hard) · CER telemetry · regression (hard)
-      -> Playwright (chromium): UI smoke x3
-  -> artifacts: pytest-html + Playwright HTML + failure gallery (real misses only)
-  -> mkdocs-material site (this page) on GitHub Pages
-```
-
-## Evidence
-
-- [Failure Gallery](failure-gallery.md) — captured hard-gate misses: input | degraded | GT | pred | defect class
-- [API + Model report (pytest-html)](reports/api-model.html) — generated in CI
-- [UI report (Playwright HTML)](reports/ui-report/index.html) — generated in CI
-- [Repository](https://github.com/AKARandy/QUACKO) · [Actions](https://github.com/AKARandy/QUACKO/actions)
-
-## Screenshot proof (real runs)
-
-<div class="qk-shots">
-  <figure class="qk-shot qk-shot-wide">
-    <img src="screenshots/02-result-valid.png" alt="real receipt read by the engine" loading="lazy">
-    <figcaption>Hero: a real receipt through the real engine (text, confidence, word boxes).</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/01-upload-empty.png" alt="empty dashboard" loading="lazy">
-    <figcaption>Empty dashboard before upload.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/03-error-invalid.png" alt="invalid upload error" loading="lazy">
-    <figcaption>Invalid upload shows the real API error.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/04-clear-reset.png" alt="cleared dashboard" loading="lazy">
-    <figcaption>Clear resets to the empty state.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/06-pytest-report.png" alt="CI pytest report" loading="lazy">
-    <figcaption>CI pytest report: 16/16 green.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/07-playwright-report.png" alt="CI Playwright report" loading="lazy">
-    <figcaption>CI Playwright report: 3/3 green.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/10-ui-match.png" alt="dashboard next to reference design" loading="lazy">
-    <figcaption>Dashboard next to the reference design it matches.</figcaption>
-  </figure>
-  <figure class="qk-shot">
-    <img src="screenshots/11-gallery-proof.png" alt="gallery self-test capture" loading="lazy">
-    <figcaption>Gallery self-test: a forced miss, captured and rendered, then restored to green.</figcaption>
-  </figure>
-</div>
-
-## Data & gates
-
-- 20 real receipts, 20 different merchants, pinned in `data/golden/MANIFEST-20.sha256`
-  with full provenance (`data/golden/PROVENANCE-20.md`). Tests re-verify every hash on load.
-- Three tiers, enforced in code (pytest asserts): **hard gates** (contract, invariants,
-  metamorphic, regression) · **accuracy telemetry** (CER measured + displayed, never
-  gated) · **regression baselines** (10% relative, provenance-matched; REG fails
-  closed on unknown environments). Every change is
-  logged in [Quality Gates](quality-gates.md).

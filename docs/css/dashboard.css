@@ -1,4 +1,11 @@
-/* QUACKO evidence dashboard: pills, metric cards, chart, gallery, modal. */
+/* QUACKO evidence dashboard: pills, metric cards, chart, gallery, modal.
+ * Scoped guard: Material's own `.md-typeset h1` color rule outranks Tailwind
+ * utilities, so headings inside the dark landing panel get explicit white.
+ * Scoped to #qk-dash only. The global MkDocs theme is never touched. */
+#qk-dash h1,
+#qk-dash h2 {
+  color: #fff;
+}
 
 .qk-hero {
   background: #232946;

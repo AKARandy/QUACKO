@@ -14,20 +14,21 @@
     var el = document.getElementById(id);
     if (el) el.textContent = txt;
   }
+  var PILL_BASE = "px-3 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap ";
   function pill(id, label, rate, infoText) {
     var el = document.getElementById(id);
     if (!el) return;
-    el.classList.remove("qk-pass", "qk-fail", "qk-info");
     if (infoText) {
-      el.classList.add("qk-info");
+      el.className = PILL_BASE + "bg-blue-500/20 text-blue-400";
       el.textContent = label + ": " + infoText;
     } else if (rate === 1) {
-      el.classList.add("qk-pass");
+      el.className = PILL_BASE + "bg-green-500/20 text-green-400";
       el.textContent = label + ": PASSING";
     } else if (rate == null) {
+      el.className = PILL_BASE + "bg-slate-700 text-slate-300";
       el.textContent = label + ": NO DATA";
     } else {
-      el.classList.add("qk-fail");
+      el.className = PILL_BASE + "bg-red-500/20 text-red-400";
       el.textContent = label + ": FAILING";
     }
   }
@@ -41,7 +42,7 @@
     });
     set("dash-src", msg);
     var box = document.getElementById("cer-box");
-    if (box) box.innerHTML = '<div class="qk-fallback">' + msg + "</div>";
+    if (box) box.innerHTML = '<div class="border border-slate-700 rounded-xl p-6 text-slate-400 text-sm">' + msg + "</div>";
   }
 
   fetch("assets/data/metrics.json", { cache: "no-store" })
@@ -67,12 +68,12 @@
       var reg = document.getElementById("m-reg");
       if (pr.model === 1) {
         set("m-reg", "HOLDING");
-        if (reg) reg.classList.add("qk-good");
+        if (reg) reg.classList.add("text-green-400");
       } else if (pr.model == null) {
         set("m-reg", "NO DATA");
       } else {
         set("m-reg", "FAILING");
-        if (reg) reg.classList.add("qk-bad");
+        if (reg) reg.classList.add("text-red-400");
       }
 
       var p = run.provenance || {};
@@ -88,7 +89,7 @@
       if (!canvas) return;
       if (!window.Chart) {
         document.getElementById("cer-box").innerHTML =
-          '<div class="qk-fallback">Chart library (Chart.js CDN) did not load. ' +
+          '<div class="border border-slate-700 rounded-xl p-6 text-slate-400 text-sm">Chart library (Chart.js CDN) did not load. ' +
           "Raw per-receipt values ship with this build in assets/data/metrics.json.</div>";
         return;
       }
@@ -106,15 +107,15 @@
         data: {
           labels: labels,
           datasets: [
-            { label: "clean", data: pct(rows, "cer_clean"), backgroundColor: "#232946" },
-            { label: "blur", data: pct(rows, "cer_blur"), backgroundColor: "#f0b34c" }
+            { label: "clean", data: pct(rows, "cer_clean"), backgroundColor: "#2dd4bf" },
+            { label: "blur", data: pct(rows, "cer_blur"), backgroundColor: "#fbbf24" }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: "top" },
+            legend: { position: "top", labels: { color: "#e2e8f0" } },
             tooltip: {
               callbacks: {
                 label: function (c) {
@@ -124,8 +125,17 @@
             }
           },
           scales: {
-            y: { title: { display: true, text: "field-CER %" }, beginAtZero: true },
-            x: { title: { display: true, text: "receipt" } }
+            y: {
+              title: { display: true, text: "field-CER %", color: "#94a3b8" },
+              ticks: { color: "#94a3b8" },
+              grid: { color: "rgba(148,163,184,0.15)" },
+              beginAtZero: true
+            },
+            x: {
+              title: { display: true, text: "receipt", color: "#94a3b8" },
+              ticks: { color: "#94a3b8" },
+              grid: { display: false }
+            }
           }
         }
       });
